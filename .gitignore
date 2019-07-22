@@ -1,0 +1,12 @@
+
+build/
+
+android/\.gradle/4\.10\.2/javaCompile/
+
+android/\.gradle/4\.10\.2/fileHashes/
+
+android/\.gradle/4\.10\.2/taskHistory/
+
+android/\.gradle/buildOutputCleanup/
+
+\.idea/
