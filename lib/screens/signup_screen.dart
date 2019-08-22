@@ -14,6 +14,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final _emailController = TextEditingController();
   final _passController = TextEditingController();
   final _addressController = TextEditingController();
+  final _phoneController = TextEditingController();
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -81,6 +82,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     SizedBox(
                       height: 16.0,
                     ),
+                    TextFormField(
+                        controller: _phoneController,
+                        decoration: InputDecoration(hintText: "Telefone p/ contato"),
+                        obscureText: false,
+                        validator: (text) =>
+                        text.isEmpty ? "Contato inválido!" : null),
+                    SizedBox(
+                      height: 16.0,
+                    ),
                     SizedBox(
                       height: 44.0,
                       child: RaisedButton(
@@ -95,7 +105,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             Map<String, dynamic> userData = {
                               "name": _nameController.text,
                               "email": _emailController.text,
-                              'address': _addressController.text
+                              "address": _addressController.text,
+                              "phone": _phoneController.text
                             };
 
                             model.signUp(

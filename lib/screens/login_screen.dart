@@ -106,7 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       if (_formKey.currentState.validate()) {
                         model.signIn(
                             email: _emailController.text,
-                            senha: _passController.text,
+                            password: _passController.text,
                             onSuccess: _onSuccess,
                             onFail: _onFail);
                       }

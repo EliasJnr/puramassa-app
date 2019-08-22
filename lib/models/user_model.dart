@@ -50,14 +50,14 @@ class UserModel extends Model {
 
   void signIn(
       {@required String email,
-      @required String senha,
+      @required String password,
       @required VoidCallback onSuccess,
       @required VoidCallback onFail}) async {
     isLoading = true;
     notifyListeners();
 
     _auth
-        .signInWithEmailAndPassword(email: email, password: senha)
+        .signInWithEmailAndPassword(email: email, password: password)
         .then((user) async {
       firebaseUser = user;
       await _loadCurrentUser();
