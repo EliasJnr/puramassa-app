@@ -14,7 +14,7 @@ class CustomDrawer extends StatelessWidget {
     Widget _buildDrawerBack() => Container(
           decoration: BoxDecoration(
               gradient: LinearGradient(
-                  colors: [Color.fromARGB(255, 203, 236, 241), Colors.white],
+                  colors: [Colors.grey, Colors.white],
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter)),
         );
@@ -36,7 +36,7 @@ class CustomDrawer extends StatelessWidget {
                       top: 8.0,
                       left: 0.0,
                       child: Text(
-                        "Flutter's \nClothing",
+                        "ea-pizza food",
                         style: TextStyle(
                             fontSize: 34.0, fontWeight: FontWeight.bold),
                       ),
