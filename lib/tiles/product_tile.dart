@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:loja_virtual/datas/product_data.dart';
 import 'package:loja_virtual/screens/product_screen.dart';
@@ -11,10 +12,9 @@ class ProductTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (){
+      onTap: () {
         Navigator.of(context).push(
-          MaterialPageRoute(builder: (context) => ProductScreen(product))
-        );
+            MaterialPageRoute(builder: (context) => ProductScreen(product)));
       },
       child: Card(
           child: type == 'grid'
@@ -24,9 +24,11 @@ class ProductTile extends StatelessWidget {
                   children: <Widget>[
                     AspectRatio(
                       aspectRatio: 0.8,
-                      child: Image.network(
-                        product.images[0],
+                      child: CachedNetworkImage(
+                        imageUrl: product.images[0],
                         fit: BoxFit.cover,
+                        placeholder: (context, url) => new Center(child: CircularProgressIndicator()),
+                        errorWidget: (context, url, error) => new Icon(Icons.error),
                       ),
                     ),
                     Expanded(
@@ -55,10 +57,12 @@ class ProductTile extends StatelessWidget {
                   children: <Widget>[
                     Flexible(
                       flex: 1,
-                      child: Image.network(
-                        product.images[0],
+                      child: CachedNetworkImage(
+                        imageUrl: product.images[0],
                         fit: BoxFit.cover,
                         height: 250.0,
+                        placeholder: (context, url) => new Center(child: CircularProgressIndicator()),
+                        errorWidget: (context, url, error) => new Icon(Icons.error),
                       ),
                     ),
                     Flexible(

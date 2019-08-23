@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
 import 'package:loja_virtual/datas/cart_product.dart';
@@ -37,7 +38,7 @@ class _ProductScreenState extends State<ProductScreen> {
             aspectRatio: 0.9,
             child: Carousel(
               images: product.images.map((url) {
-                return NetworkImage(url);
+                return CachedNetworkImageProvider(url);
               }).toList(),
               dotSize: 4.0,
               dotSpacing: 15.0,

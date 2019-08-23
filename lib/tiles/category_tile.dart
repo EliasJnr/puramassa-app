@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:loja_virtual/screens/category_screen.dart';
@@ -13,13 +14,13 @@ class CategoryTile extends StatelessWidget {
       leading: CircleAvatar(
         radius: 25.0,
         backgroundColor: Colors.transparent,
-        backgroundImage: NetworkImage(snapshot.data["icon"]),
+        backgroundImage: CachedNetworkImageProvider(snapshot.data["icon"]),
       ),
       title: Text(snapshot.data["title"]),
       trailing: Icon(Icons.keyboard_arrow_right),
       onTap: () {
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => CategoryScreen(snapshot)));
+        Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => CategoryScreen(snapshot)));
       },
     );
   }

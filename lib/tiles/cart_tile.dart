@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:loja_virtual/datas/cart_product.dart';
@@ -20,9 +21,11 @@ class CartTile extends StatelessWidget {
           Container(
             padding: EdgeInsets.all(8.0),
             width: 120.0,
-            child: Image.network(
-              cartProduct.productData.images[0],
+            child: CachedNetworkImage(
+              imageUrl: cartProduct.productData.images[0],
               fit: BoxFit.cover,
+              placeholder: (context, url) => new Center(child: CircularProgressIndicator()),
+              errorWidget: (context, url, error) => new Icon(Icons.error),
             ),
           ),
           Expanded(
