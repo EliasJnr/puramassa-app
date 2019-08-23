@@ -16,14 +16,14 @@ class PlaceTile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           SizedBox(
-            height: 100.0,
-            child: CachedNetworkImage(
-              imageUrl: snapshot.data["image"],
-              fit: BoxFit.cover,
-              placeholder: (context, url) => new Center(child: CircularProgressIndicator()),
-              errorWidget: (context, url, error) => new Icon(Icons.error),
-            )
-          ),
+              height: 100.0,
+              child: CachedNetworkImage(
+                imageUrl: snapshot.data["image"],
+                fit: BoxFit.cover,
+                placeholder: (context, url) =>
+                    new Center(child: CircularProgressIndicator()),
+                errorWidget: (context, url, error) => new Icon(Icons.error),
+              )),
           Container(
             padding: EdgeInsets.all(8.0),
             child: Column(
@@ -49,7 +49,8 @@ class PlaceTile extends StatelessWidget {
                 textColor: Colors.blue,
                 padding: EdgeInsets.zero,
                 onPressed: () {
-                  launch("http://www.google.com/maps/search/?api=1&query=${snapshot.data["lat"]},${snapshot.data["long"]}");
+                  launch(
+                      "http://www.google.com/maps/search/?api=1&query=${snapshot.data["lat"]},${snapshot.data["long"]}");
                 },
               ),
               FlatButton(

@@ -27,8 +27,10 @@ class ProductTile extends StatelessWidget {
                       child: CachedNetworkImage(
                         imageUrl: product.images[0],
                         fit: BoxFit.cover,
-                        placeholder: (context, url) => new Center(child: CircularProgressIndicator()),
-                        errorWidget: (context, url, error) => new Icon(Icons.error),
+                        placeholder: (context, url) =>
+                            new Center(child: CircularProgressIndicator()),
+                        errorWidget: (context, url, error) =>
+                            new Icon(Icons.error),
                       ),
                     ),
                     Expanded(
@@ -61,8 +63,10 @@ class ProductTile extends StatelessWidget {
                         imageUrl: product.images[0],
                         fit: BoxFit.cover,
                         height: 250.0,
-                        placeholder: (context, url) => new Center(child: CircularProgressIndicator()),
-                        errorWidget: (context, url, error) => new Icon(Icons.error),
+                        placeholder: (context, url) =>
+                            new Center(child: CircularProgressIndicator()),
+                        errorWidget: (context, url, error) =>
+                            new Icon(Icons.error),
                       ),
                     ),
                     Flexible(

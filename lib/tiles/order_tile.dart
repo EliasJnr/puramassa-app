@@ -110,7 +110,10 @@ class OrderTile extends StatelessWidget {
       );
     } else {
       backColor = Colors.green;
-      child = Icon(Icons.check, color: Colors.white,);
+      child = Icon(
+        Icons.check,
+        color: Colors.white,
+      );
     }
 
     return Column(

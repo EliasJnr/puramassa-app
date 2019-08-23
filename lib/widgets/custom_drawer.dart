@@ -57,21 +57,22 @@ class CustomDrawer extends StatelessWidget {
                               ),
                               GestureDetector(
                                 child: Text(
-                                  !model.isLoggedIn() ?
-                                  "Entre ou cadastre-se >"
-                                  : "Sair",
+                                  !model.isLoggedIn()
+                                      ? "Entre ou cadastre-se >"
+                                      : "Sair",
                                   style: TextStyle(
                                       color: Theme.of(context).primaryColor,
                                       fontWeight: FontWeight.bold),
                                 ),
                                 onTap: () {
-                                  if(!model.isLoggedIn()){
-                                    Navigator.of(context).push(MaterialPageRoute(
-                                        builder: (context) => LoginScreen()));
+                                  if (!model.isLoggedIn()) {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                LoginScreen()));
                                   } else {
                                     model.signOut();
                                   }
-
                                 },
                               )
                             ],

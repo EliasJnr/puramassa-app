@@ -15,7 +15,6 @@ class CartPrice extends StatelessWidget {
         padding: EdgeInsets.all(16.0),
         child: ScopedModelDescendant<CartModel>(
           builder: (context, child, model) {
-
             double price = model.getProductsPrice();
             double discount = model.getDiscount();
             double ship = model.getShipPrice();
@@ -33,17 +32,26 @@ class CartPrice extends StatelessWidget {
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[Text("SubTotal"), Text("R\$ ${price.toStringAsFixed(2)}")],
+                  children: <Widget>[
+                    Text("SubTotal"),
+                    Text("R\$ ${price.toStringAsFixed(2)}")
+                  ],
                 ),
                 Divider(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[Text("Desconto"), Text("R\$ ${discount.toStringAsFixed(2)}")],
+                  children: <Widget>[
+                    Text("Desconto"),
+                    Text("R\$ ${discount.toStringAsFixed(2)}")
+                  ],
                 ),
                 Divider(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[Text("Entrega"), Text("R\$ ${ship.toStringAsFixed(2)}")],
+                  children: <Widget>[
+                    Text("Entrega"),
+                    Text("R\$ ${ship.toStringAsFixed(2)}")
+                  ],
                 ),
                 Divider(),
                 SizedBox(
