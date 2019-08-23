@@ -10,3 +10,13 @@ android/\.gradle/4\.10\.2/taskHistory/
 android/\.gradle/buildOutputCleanup/
 
 \.idea/
+
+*.lock
+
+\.packages
+
+\.flutter-plugins
+
+ios/Runner/
+
+android/app/src/main/java/io/flutter/plugins/
