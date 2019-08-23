@@ -82,10 +82,35 @@ class _ProductScreenState extends State<ProductScreen> {
                       childAspectRatio: 0.5,
                     ),
                     children: product.sizes.map((s) {
+                      var index = product.sizes.indexOf(s);
+                      var label = "";
+
+                      switch (index) {
+                        case 0:
+                          label = "Mini";
+                          break;
+                        case 1:
+                          label = "B";
+                          break;
+                        case 2:
+                          label = "P";
+                          break;
+                        case 3:
+                          label = "M";
+                          break;
+                        case 4:
+                          label = "G";
+                          break;
+                        case 5:
+                          label = "F";
+                          break;
+                      }
+
                       return GestureDetector(
                         onTap: () {
                           setState(() {
                             size = s;
+                            product.price = double.tryParse(s);
                           });
                         },
                         child: Container(
@@ -98,7 +123,7 @@ class _ProductScreenState extends State<ProductScreen> {
                                       : Colors.grey[500])),
                           width: 50.0,
                           alignment: Alignment.center,
-                          child: Text(s),
+                          child: Text(label),
                         ),
                       );
                     }).toList(),

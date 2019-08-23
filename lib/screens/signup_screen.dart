@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:loja_virtual/models/user_model.dart';
 import 'package:scoped_model/scoped_model.dart';
+import 'package:cpf_cnpj_validator/cpf_validator.dart';
+import 'package:cpf_cnpj_validator/cnpj_validator.dart';
 
 class SignUpScreen extends StatefulWidget {
   @override
@@ -10,13 +13,19 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   final _formKey = GlobalKey<FormState>();
 
+  final _cpfcnpjController = TextEditingController();
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passController = TextEditingController();
   final _addressController = TextEditingController();
-  final _phoneController = TextEditingController();
+  final _phoneController = MaskedTextController(mask: "(00) 00000-0000");
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,11 +48,30 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   padding: EdgeInsets.all(16.0),
                   children: <Widget>[
                     TextFormField(
+                      controller: _cpfcnpjController,
+                      decoration:
+                      InputDecoration(hintText: "CPF ou CNPJ do cliente"),
+                      validator: (cpfcnpj) {
+                        if (cpfcnpj.isEmpty) return "CPF/CNPJ inválido!";
+
+                        if (CPFValidator.isValid(cpfcnpj) ||
+                            CNPJValidator.isValid(cpfcnpj)) {
+                          return null;
+                        } else {
+                          return "CPF/CNPJ inválido!";
+                        }
+                      },
+                    ),
+                    SizedBox(
+                      height: 16.0,
+                    ),
+                    TextFormField(
                       controller: _nameController,
-                      decoration: InputDecoration(hintText: "Nome Completo"),
+                      decoration: InputDecoration(
+                          hintText: "Nome ou Razão Social"),
                       validator: (text) {
                         if (text.isEmpty) {
-                          return "Nome inválido!";
+                          return "Nome/Razão Social inválido!";
                         } else {
                           return null;
                         }
@@ -56,7 +84,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       controller: _emailController,
                       decoration: InputDecoration(hintText: "Email"),
                       keyboardType: TextInputType.emailAddress,
-                      validator: (text) => text.isEmpty || !text.contains("@")
+                      validator: (text) =>
+                      text.isEmpty || !text.contains("@")
                           ? "E-mail inválido!"
                           : null,
                     ),
@@ -67,7 +96,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         controller: _passController,
                         decoration: InputDecoration(hintText: "Senha"),
                         obscureText: true,
-                        validator: (text) => text.isEmpty || text.length < 6
+                        validator: (text) =>
+                        text.isEmpty || text.length < 6
                             ? "Senha inválida!"
                             : null),
                     SizedBox(
@@ -78,16 +108,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         decoration: InputDecoration(hintText: "Endereço"),
                         obscureText: false,
                         validator: (text) =>
-                            text.isEmpty ? "Endereço inválido!" : null),
+                        text.isEmpty ? "Endereço inválido!" : null),
                     SizedBox(
                       height: 16.0,
                     ),
                     TextFormField(
                         controller: _phoneController,
-                        decoration: InputDecoration(hintText: "Telefone p/ contato"),
+                        decoration:
+                        InputDecoration(hintText: "Telefone p/ contato"),
                         obscureText: false,
+                        keyboardType: TextInputType.phone,
                         validator: (text) =>
-                        text.isEmpty ? "Contato inválido!" : null),
+                        text.isEmpty ? "Numero inválido!" : null),
                     SizedBox(
                       height: 16.0,
                     ),
@@ -99,10 +131,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           style: TextStyle(fontSize: 18.0),
                         ),
                         textColor: Colors.white,
-                        color: Theme.of(context).primaryColor,
+                        color: Theme
+                            .of(context)
+                            .primaryColor,
                         onPressed: () {
                           if (_formKey.currentState.validate()) {
                             Map<String, dynamic> userData = {
+                              "cpfcnpj": _cpfcnpjController.text,
                               "name": _nameController.text,
                               "email": _emailController.text,
                               "address": _addressController.text,
@@ -128,7 +163,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
   void _onSuccess() {
     _scaffoldKey.currentState.showSnackBar(SnackBar(
       content: Text("Usuário criado com sucesso !"),
-      backgroundColor: Theme.of(context).primaryColor,
+      backgroundColor: Theme
+          .of(context)
+          .primaryColor,
       duration: Duration(seconds: 2),
     ));
 
@@ -143,6 +180,5 @@ class _SignUpScreenState extends State<SignUpScreen> {
       backgroundColor: Colors.redAccent,
       duration: Duration(seconds: 2),
     ));
-
   }
 }

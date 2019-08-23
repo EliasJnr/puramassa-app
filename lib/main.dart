@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:loja_virtual/models/cart_model.dart';
 import 'package:loja_virtual/screens/home_screen.dart';
@@ -10,8 +11,12 @@ void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
+
+
+
     return ScopedModel<UserModel>(
         model: UserModel(),
         child: ScopedModelDescendant<UserModel>(builder: (context, child, model){
