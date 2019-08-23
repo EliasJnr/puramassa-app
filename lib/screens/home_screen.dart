@@ -31,7 +31,7 @@ class HomeScreen extends StatelessWidget {
         ),
         Scaffold(
           appBar: AppBar(
-            title: Text("Lojas"),
+            title: Text("Local e Contato"),
             centerTitle: true,
           ),
           body: PlacesTab(),
