@@ -72,7 +72,7 @@ class _ProductScreenState extends State<ProductScreen> {
                   style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16.0),
                 ),
                 SizedBox(
-                  height: 34.0,
+                  height: 40.0,
                   child: GridView(
                     padding: EdgeInsets.symmetric(vertical: 4.0),
                     scrollDirection: Axis.horizontal,
@@ -82,35 +82,12 @@ class _ProductScreenState extends State<ProductScreen> {
                       childAspectRatio: 0.5,
                     ),
                     children: product.sizes.map((s) {
-                      var index = product.sizes.indexOf(s);
-                      var label = "";
-
-                      switch (index) {
-                        case 0:
-                          label = "Mini";
-                          break;
-                        case 1:
-                          label = "B";
-                          break;
-                        case 2:
-                          label = "P";
-                          break;
-                        case 3:
-                          label = "M";
-                          break;
-                        case 4:
-                          label = "G";
-                          break;
-                        case 5:
-                          label = "F";
-                          break;
-                      }
 
                       return GestureDetector(
                         onTap: () {
                           setState(() {
-                            size = s;
-                            product.price = double.tryParse(s);
+                            size = s["size"];
+                            product.price = double.tryParse(s["price"].toString());
                           });
                         },
                         child: Container(
@@ -118,12 +95,12 @@ class _ProductScreenState extends State<ProductScreen> {
                               borderRadius:
                                   BorderRadius.all(Radius.circular(4.0)),
                               border: Border.all(
-                                  color: s == size
+                                  color: s["size"] == size
                                       ? primaryColor
                                       : Colors.grey[500])),
                           width: 50.0,
                           alignment: Alignment.center,
-                          child: Text(label),
+                          child: Text(s["size"]),
                         ),
                       );
                     }).toList(),
