@@ -36,7 +36,7 @@ class CustomDrawer extends StatelessWidget {
                       top: 8.0,
                       left: 0.0,
                       child: Text(
-                        "ea-pizza food",
+                        "shop",
                         style: TextStyle(
                             fontSize: 34.0, fontWeight: FontWeight.bold),
                       ),

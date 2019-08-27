@@ -46,21 +46,27 @@ class HomeTab extends StatelessWidget {
                     ),
                   );
                 } else {
-                  return SliverStaggeredGrid.count(
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 1.0,
-                    crossAxisSpacing: 1.0,
-                    staggeredTiles: snapshot.data.documents.map((doc) {
-                      return StaggeredTile.count(doc.data["x"], doc.data["y"]);
-                    }).toList(),
-                    children: snapshot.data.documents.map((doc) {
-                      return FadeInImage.memoryNetwork(
-                        placeholder: kTransparentImage,
-                        image: doc.data["image"],
-                        fit: BoxFit.cover,
-                      );
-                    }).toList(),
+                  return SliverToBoxAdapter(
+                    child: Container(
+                      height: 200.0,
+                      alignment: Alignment.center
+                    ),
                   );
+//                  return SliverStaggeredGrid.count(
+//                    crossAxisCount: 2,
+//                    mainAxisSpacing: 1.0,
+//                    crossAxisSpacing: 1.0,
+//                    staggeredTiles: snapshot.data.documents.map((doc) {
+//                      return StaggeredTile.count(doc.data["x"], doc.data["y"]);
+//                    }).toList(),
+//                    children: snapshot.data.documents.map((doc) {
+//                      return FadeInImage.memoryNetwork(
+//                        placeholder: kTransparentImage,
+//                        image: doc.data["image"],
+//                        fit: BoxFit.cover,
+//                      );
+//                    }).toList(),
+//                  );
                 }
               },
             )
