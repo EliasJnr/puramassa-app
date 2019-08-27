@@ -21,7 +21,7 @@ class HomeScreen extends StatelessWidget {
             title: Text("APP"),
             centerTitle: true,
           ),
-          body: HomeTab(),
+          body: MainTab(),
           drawer: CustomDrawer(_pageController),
           floatingActionButton: CartButton(),
         ),

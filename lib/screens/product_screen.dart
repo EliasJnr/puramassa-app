@@ -24,6 +24,14 @@ class _ProductScreenState extends State<ProductScreen> {
   _ProductScreenState(this.product);
 
   @override
+  void initState() {
+    super.initState();
+    this.product.price =
+        double.tryParse(this.product.sizes.first['price'].toString());
+    size = this.product.sizes.first['size'];
+  }
+
+  @override
   Widget build(BuildContext context) {
     final Color primaryColor = Theme.of(context).primaryColor;
 
@@ -82,12 +90,12 @@ class _ProductScreenState extends State<ProductScreen> {
                       childAspectRatio: 0.5,
                     ),
                     children: product.sizes.map((s) {
-
                       return GestureDetector(
                         onTap: () {
                           setState(() {
                             size = s["size"];
-                            product.price = double.tryParse(s["price"].toString());
+                            product.price =
+                                double.tryParse(s["price"].toString());
                           });
                         },
                         child: Container(
