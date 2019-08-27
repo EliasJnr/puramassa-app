@@ -20,3 +20,5 @@ android/\.gradle/buildOutputCleanup/
 ios/Runner/
 
 android/app/src/main/java/io/flutter/plugins/
+
+android/local.properties
