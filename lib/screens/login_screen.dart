@@ -16,7 +16,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _passController = TextEditingController();
 
   void whatsAppOpen() async {
-    var whatsappUrl = "whatsapp://send?phone=5592992224432";
+    var whatsappUrl = "whatsapp://send?phone=5592982611237";
     await canLaunch(whatsappUrl) ? launch(whatsappUrl) : wppNotInstalled();
   }
 

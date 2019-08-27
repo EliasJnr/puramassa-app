@@ -14,24 +14,22 @@ class MainTab extends StatelessWidget {
         } else {
           bool opened = false;
 
-          DateTime startDelivery =
-              snapshot.data.documents.first['opened'].toDate();
-          DateTime stopDelivery =
-              snapshot.data.documents.first['closed'].toDate();
+          var startDelivery =
+              snapshot.data.documents.first['opened'];
+          var stopDelivery =
+              snapshot.data.documents.first['closed'];
 
-          if (startDelivery.hour <= DateTime.now().hour) {
+          if (stopDelivery >= DateTime.now().hour.toInt()) {
             opened = true;
           } else {
             opened = false;
           }
 
-          String openedHour = startDelivery.hour.toString() +
-              ":" +
-              startDelivery.minute.toStringAsFixed(1);
+          String openedHour = startDelivery.toString() +
+              ":00";
 
-          String hour = stopDelivery.hour.toStringAsFixed(1) +
-              ":" +
-              stopDelivery.minute.toStringAsFixed(1);
+          String closedHour = stopDelivery.toString() +
+              ":00";
 
           return Center(
             child: Column(
@@ -42,8 +40,8 @@ class MainTab extends StatelessWidget {
                     backgroundColor: Colors.transparent,
                     title: Text(
                       opened
-                          ? "Aberto até " + hour.replaceAll(".", "") + "h"
-                          : "Abre às " + openedHour.replaceAll(".", "") + "h",
+                          ? "Aberto até " + closedHour.replaceAll(".", "")
+                          : "Abre às " + openedHour.replaceAll(".", ""),
                       textAlign: TextAlign.start,
                       style: TextStyle(
                           fontWeight: FontWeight.w500,
@@ -66,10 +64,8 @@ class MainTab extends StatelessWidget {
                             decoration: InputDecoration(),
                             initialValue: " Delivery: " +
                                 openedHour.replaceAll(".", "") +
-                                "h" +
                                 " às " +
-                                hour.replaceAll(".", "") +
-                                "h",
+                                closedHour.replaceAll(".", ""),
                             enabled: false,
                           ),
                         ),
