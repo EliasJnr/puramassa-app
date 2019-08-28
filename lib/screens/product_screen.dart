@@ -26,8 +26,7 @@ class _ProductScreenState extends State<ProductScreen> {
   @override
   void initState() {
     super.initState();
-    this.product.price =
-        double.tryParse(this.product.sizes.first['price'].toString());
+    this.product.price = double.tryParse(this.product.sizes.first['price'].toString());
     size = this.product.sizes.first['size'];
   }
 
