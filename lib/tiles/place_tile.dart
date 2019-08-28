@@ -44,13 +44,21 @@ class PlaceTile extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
+//              FlatButton(
+//                child: Text("Ver no Mapa"),
+//                textColor: Colors.blue,
+//                padding: EdgeInsets.zero,
+//                onPressed: () {
+//                  launch(
+//                      "http://www.google.com/maps/search/?api=1&query=${snapshot.data["lat"]},${snapshot.data["long"]}");
+//                },
+//              ),
               FlatButton(
-                child: Text("Ver no Mapa"),
+                child: Text("WhatsApp"),
                 textColor: Colors.blue,
                 padding: EdgeInsets.zero,
                 onPressed: () {
-                  launch(
-                      "http://www.google.com/maps/search/?api=1&query=${snapshot.data["lat"]},${snapshot.data["long"]}");
+                  whatsAppOpen(snapshot.data["phone"], context);
                 },
               ),
               FlatButton(
@@ -66,5 +74,20 @@ class PlaceTile extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void whatsAppOpen(String phone, BuildContext context) async {
+    var whatsappUrl = "whatsapp://send?phone=$phone";
+    await canLaunch(whatsappUrl)
+        ? launch(whatsappUrl)
+        : wppNotInstalled(context);
+  }
+
+  void wppNotInstalled(BuildContext context) {
+    Scaffold.of(context).showSnackBar(SnackBar(
+      content: Text("whatsApp não instalado !"),
+      backgroundColor: Colors.redAccent,
+      duration: Duration(seconds: 2),
+    ));
   }
 }

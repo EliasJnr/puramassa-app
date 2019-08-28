@@ -14,10 +14,8 @@ class MainTab extends StatelessWidget {
         } else {
           bool opened = false;
 
-          var startDelivery =
-              snapshot.data.documents.first['opened'];
-          var stopDelivery =
-              snapshot.data.documents.first['closed'];
+          var startDelivery = snapshot.data.documents.first['opened'];
+          var stopDelivery = snapshot.data.documents.first['closed'];
 
           if (stopDelivery >= DateTime.now().hour.toInt()) {
             opened = true;
@@ -25,14 +23,13 @@ class MainTab extends StatelessWidget {
             opened = false;
           }
 
-          String openedHour = startDelivery.toString() +
-              ":00";
+          String openedHour = startDelivery.toString() + ":00";
 
-          String closedHour = stopDelivery.toString() +
-              ":00";
+          String closedHour = stopDelivery.toString() + ":00";
 
           return Center(
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Card(
                   margin: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),

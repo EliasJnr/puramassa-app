@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:loja_virtual/tabs/home_tab.dart';
 import 'package:loja_virtual/tabs/main_tab.dart';
 import 'package:loja_virtual/tabs/orders_tab.dart';
 import 'package:loja_virtual/tabs/places_tab.dart';
@@ -36,7 +35,7 @@ class HomeScreen extends StatelessWidget {
         ),
         Scaffold(
           appBar: AppBar(
-            title: Text("Local e Contato"),
+            title: Text("Contato"),
             centerTitle: true,
           ),
           body: PlacesTab(),

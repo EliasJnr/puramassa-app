@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:loja_virtual/models/user_model.dart';
+import 'package:loja_virtual/screens/signup_screen.dart';
 import 'package:scoped_model/scoped_model.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -14,19 +14,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   final _emailController = TextEditingController();
   final _passController = TextEditingController();
-
-  void whatsAppOpen() async {
-    var whatsappUrl = "whatsapp://send?phone=5592982611237";
-    await canLaunch(whatsappUrl) ? launch(whatsappUrl) : wppNotInstalled();
-  }
-
-  void wppNotInstalled() {
-    _scaffoldKey.currentState.showSnackBar(SnackBar(
-      content: Text("whatsApp não instalado !"),
-      backgroundColor: Colors.redAccent,
-      duration: Duration(seconds: 2),
-    ));
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +30,8 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             textColor: Colors.white,
             onPressed: () {
-              whatsAppOpen();
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => SignUpScreen()));
             },
           )
         ],
