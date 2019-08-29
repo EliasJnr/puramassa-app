@@ -54,29 +54,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       validator: (cpfcnpj) {
                         if (cpfcnpj.isEmpty) return "CPF/CNPJ inválido!";
 
-                        if (CPFValidator.isValid(cpfcnpj) ||
-                            CNPJValidator.isValid(cpfcnpj)) {
-                          return null;
-                        } else {
-                          return "CPF/CNPJ inválido!";
-                        }
+                        return CPFValidator.isValid(cpfcnpj) ||
+                                CNPJValidator.isValid(cpfcnpj)
+                            ? null
+                            : "CPF/CNPJ inválido!";
                       },
                     ),
                     SizedBox(
                       height: 16.0,
                     ),
                     TextFormField(
-                      controller: _nameController,
-                      decoration:
-                          InputDecoration(hintText: "Nome ou Razão Social"),
-                      validator: (text) {
-                        if (text.isEmpty) {
-                          return "Nome/Razão Social inválido!";
-                        } else {
-                          return null;
-                        }
-                      },
-                    ),
+                        controller: _nameController,
+                        decoration:
+                            InputDecoration(hintText: "Nome ou Razão Social"),
+                        validator: (text) => text.isEmpty
+                            ? "Nome/Razão Social inválido!"
+                            : null),
                     SizedBox(
                       height: 16.0,
                     ),
