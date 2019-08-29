@@ -7,7 +7,7 @@ class CartProduct {
   String pid;
   int quantity;
   String size;
-
+  double price;
   ProductData productData;
 
   CartProduct();
@@ -18,6 +18,7 @@ class CartProduct {
     pid = document.data["pid"];
     quantity = document.data["quantity"];
     size = document.data["size"];
+    price = document.data['product']['price'];
   }
 
   Map<String, dynamic> toMap() {

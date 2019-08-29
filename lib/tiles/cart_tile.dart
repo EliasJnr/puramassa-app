@@ -13,6 +13,10 @@ class CartTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget _buildContent() {
+      if (cartProduct.productData.price == 0.0) {
+        cartProduct.productData.price = cartProduct.price;
+      }
+
       CartModel.of(context).updatePrices();
 
       return Row(
@@ -24,7 +28,8 @@ class CartTile extends StatelessWidget {
             child: CachedNetworkImage(
               imageUrl: cartProduct.productData.images[0],
               fit: BoxFit.cover,
-              placeholder: (context, url) => new Center(child: CircularProgressIndicator()),
+              placeholder: (context, url) =>
+                  new Center(child: CircularProgressIndicator()),
               errorWidget: (context, url, error) => new Icon(Icons.error),
             ),
           ),
@@ -57,9 +62,11 @@ class CartTile extends StatelessWidget {
                       IconButton(
                         icon: Icon(Icons.remove),
                         color: Theme.of(context).primaryColor,
-                        onPressed: cartProduct.quantity > 1 ? () {
-                          CartModel.of(context).decProduct(cartProduct);
-                        } : null,
+                        onPressed: cartProduct.quantity > 1
+                            ? () {
+                                CartModel.of(context).decProduct(cartProduct);
+                              }
+                            : null,
                       ),
                       Text(cartProduct.quantity.toString()),
                       IconButton(
@@ -100,6 +107,7 @@ class CartTile extends StatelessWidget {
                   if (snapshot.hasData) {
                     cartProduct.productData =
                         ProductData.fromDocument(snapshot.data);
+
                     return _buildContent();
                   } else {
                     return Container(

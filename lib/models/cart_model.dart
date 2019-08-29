@@ -83,7 +83,8 @@ class CartModel extends Model {
     double price = 0.0;
     for (CartProduct c in products) {
       if (c != null) {
-        if (c.productData != null) price += c.quantity * c.productData.price;
+        if (c.productData != null)
+          price += c.quantity * c.productData.price.toDouble();
       }
     }
     return price;
@@ -151,8 +152,9 @@ class CartModel extends Model {
         .collection("cart")
         .getDocuments();
 
-    products =
-        query.documents.map((doc) => CartProduct.fromDocument(doc)).toList();
+    products = query.documents.map((doc) {
+      return CartProduct.fromDocument(doc);
+    }).toList();
 
     notifyListeners();
   }
