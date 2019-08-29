@@ -116,7 +116,7 @@ class CartModel extends Model {
       "productsPrice": productsPrice,
       "discount": discount,
       "totalPrice": productsPrice - discount + shipPirce,
-      "status": 1
+      "status": 0
     });
 
     await Firestore.instance

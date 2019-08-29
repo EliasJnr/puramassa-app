@@ -50,19 +50,25 @@ class OrderTile extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
-                        _buildCircle("1", "Preparação", status, 1),
+                        _buildCircle("1", "Fila", status, 0),
                         Container(
                           height: 1.0,
-                          width: 40.0,
+                          width: 20.0,
                           color: Colors.grey[500],
                         ),
-                        _buildCircle("2", "Transporte", status, 2),
+                        _buildCircle("2", "Preparação", status, 1),
                         Container(
                           height: 1.0,
-                          width: 40.0,
+                          width: 20.0,
                           color: Colors.grey[500],
                         ),
-                        _buildCircle("3", "Entrega", status, 3),
+                        _buildCircle("3", "Transporte", status, 2),
+                        Container(
+                          height: 1.0,
+                          width: 20.0,
+                          color: Colors.grey[500],
+                        ),
+                        _buildCircle("4", "Entrega", status, 3),
                       ],
                     ),
                   ],
@@ -95,7 +101,12 @@ class OrderTile extends StatelessWidget {
         style: TextStyle(color: Colors.white),
       );
     } else if (status == thisStatus) {
-      backColor = Colors.blue;
+      if (thisStatus == 0) {
+        backColor = Colors.red;
+      } else {
+        backColor = Colors.blue;
+      }
+
       child = Stack(
         alignment: Alignment.center,
         children: <Widget>[
