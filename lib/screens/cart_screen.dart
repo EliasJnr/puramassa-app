@@ -91,10 +91,20 @@ class CartScreen extends StatelessWidget {
               DiscountCard(),
               // ShipCard(),
               CartPrice(() async {
-                String orderId = await model.finishOrder();
-                if (orderId != null)
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (context) => OrderScreen(orderId)));
+                if (model.getProductsPrice() -
+                        model.getDiscount() +
+                        model.getShipPrice() <
+                    30.0) {
+                  Scaffold.of(context).showSnackBar(SnackBar(
+                    content: Text("Valor mínimo por pedido \$30.0 !"),
+                    backgroundColor: Colors.redAccent,
+                  ));
+                } else {
+                  String orderId = await model.finishOrder();
+                  if (orderId != null)
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => OrderScreen(orderId)));
+                }
               })
             ],
           );
