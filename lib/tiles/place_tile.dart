@@ -77,7 +77,7 @@ class PlaceTile extends StatelessWidget {
   }
 
   void whatsAppOpen(String phone, BuildContext context) async {
-    var wppURL = "whatsapp://send?phone=$phone&text=sua%20mensagem%20aqui";
+    var wppURL = "whatsapp://send?phone=$phone&text=Olá";
     await canLaunch(wppURL) ? launch(wppURL) : wppNotInstalled(context);
   }
 
