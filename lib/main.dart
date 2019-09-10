@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
           return ScopedModel<CartModel>(
             model: CartModel(model),
             child: MaterialApp(
-              title: "pizza food",
+              title: "Atacado Pizza",
               theme: ThemeData(
                   primarySwatch: Colors.yellow, primaryColor: Colors.red),
               home: HomeScreen(),

@@ -17,6 +17,9 @@ class MainTab extends StatelessWidget {
           var startDelivery = snapshot.data.documents.first['opened'];
           var stopDelivery = snapshot.data.documents.first['closed'];
 
+          print(startDelivery);
+          print(stopDelivery);
+
           if (stopDelivery >= int.parse(DateTime.now().hour.toInt().toString()) || startDelivery <= int.parse(DateTime.now().hour.toInt().toString()) ) {
             opened = true;
           } else {
