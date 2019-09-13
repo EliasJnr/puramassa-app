@@ -7,6 +7,12 @@ class OrderScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+
+    Future.delayed(Duration(seconds: 3)).then((_) {
+      Navigator.of(context).pop();
+    });
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Pedido Realizado"),

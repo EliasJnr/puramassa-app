@@ -19,6 +19,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final _passController = TextEditingController();
   final _addressController = TextEditingController();
   final _phoneController = MaskedTextController(mask: "(00) 00000-0000");
+  final _phone2Controller = MaskedTextController(mask: "(00) 00000-0000");
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -114,6 +115,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     SizedBox(
                       height: 16.0,
                     ),
+                    TextFormField(
+                        controller: _phone2Controller,
+                        decoration:
+                        InputDecoration(hintText: "Outro telefone p/ contato"),
+                        obscureText: false,
+                        keyboardType: TextInputType.phone,
+                        validator: (text) =>
+                        text.isEmpty || _phoneController.text == _phone2Controller.text ? "Numero inválido!" : null),
+                    SizedBox(
+                      height: 16.0,
+                    ),
                     SizedBox(
                       height: 44.0,
                       child: RaisedButton(
@@ -130,7 +142,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               "name": _nameController.text,
                               "email": _emailController.text,
                               "address": _addressController.text,
-                              "phone": _phoneController.text
+                              "phone": _phoneController.text,
+                              "phone2": _phone2Controller.text
                             };
 
                             model.signUp(
