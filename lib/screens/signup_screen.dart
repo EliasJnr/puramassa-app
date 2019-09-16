@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:loja_virtual/models/user_model.dart';
 import 'package:scoped_model/scoped_model.dart';
-import 'package:geolocator/geolocator.dart';
 
 class SignUpScreen extends StatefulWidget {
   @override

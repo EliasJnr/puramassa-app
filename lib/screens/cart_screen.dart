@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:loja_virtual/models/cart_model.dart';
 import 'package:loja_virtual/models/user_model.dart';
 import 'package:loja_virtual/screens/login_screen.dart';
-import 'package:loja_virtual/screens/order_screen.dart';
 import 'package:loja_virtual/tiles/cart_tile.dart';
 import 'package:loja_virtual/widgets/cart_price.dart';
 import 'package:loja_virtual/widgets/discount_card.dart';
@@ -100,16 +99,59 @@ class CartScreen extends StatelessWidget {
                     backgroundColor: Colors.redAccent,
                   ));
                 } else {
-                  String orderId = await model.finishOrder();
-                  if (orderId != null)
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (context) => OrderScreen(orderId)));
+                  _showDialog(context, model);
+
+//                  String orderId = await model.finishOrder();
+//                  if (orderId != null)
+//                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+//                        builder: (context) => OrderScreen(orderId)));
+
                 }
               })
             ],
           );
         }
       }),
+    );
+  }
+
+  void _showDialog(BuildContext context, CartModel model) {
+    // flutter defined function
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Resumo do Pedido"),
+          content: Container(
+            color: Colors.transparent,
+            child: Column(
+              children: <Widget>[
+                Text(model.getProductsPrice().toString()),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+           Row(
+             crossAxisAlignment: CrossAxisAlignment.end,
+             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+             children: <Widget>[
+               new FlatButton(
+                 child: new Text(
+                   "CANCELAR",
+                   style: TextStyle(
+                       color: Theme.of(context).primaryColor, fontSize: 15.0),
+                 ),
+                 onPressed: () {
+                   Navigator.of(context).pop();
+                 },
+               ),
+             ],
+           ),
+          ],
+        );
+      },
     );
   }
 }
