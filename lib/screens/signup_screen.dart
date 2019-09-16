@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:loja_virtual/models/user_model.dart';
 import 'package:scoped_model/scoped_model.dart';
+import 'package:geolocator/geolocator.dart';
 
 class SignUpScreen extends StatefulWidget {
   @override
@@ -17,6 +18,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passController = TextEditingController();
+  final _confirmPassController = TextEditingController();
   final _addressController = TextEditingController();
   final _phoneController = MaskedTextController(mask: "(00) 00000-0000");
   final _phone2Controller = MaskedTextController(mask: "(00) 00000-0000");
@@ -90,7 +92,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         decoration: InputDecoration(hintText: "Senha"),
                         obscureText: true,
                         validator: (text) => text.isEmpty || text.length < 6
-                            ? "Senha inválida!"
+                            ? "Senha inválida! * min 6 dígitos "
+                            : null),
+                    SizedBox(
+                      height: 16.0,
+                    ),
+                    TextFormField(
+                        controller: _confirmPassController,
+                        decoration: InputDecoration(hintText: "Confirmar Senha"),
+                        obscureText: true,
+                        validator: (text) => _confirmPassController.text != _passController.text
+                            ? "Senhas não coincidem!"
                             : null),
                     SizedBox(
                       height: 16.0,
