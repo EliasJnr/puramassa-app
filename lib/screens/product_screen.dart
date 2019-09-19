@@ -78,7 +78,10 @@ class _ProductScreenState extends State<ProductScreen> {
                   style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16.0),
                 ),
                 SizedBox(
-                  height: 40.0,
+                  height: 5.0,
+                ),
+                SizedBox(
+                  height: 60.0,
                   child: GridView(
                     padding: EdgeInsets.symmetric(vertical: 4.0),
                     scrollDirection: Axis.horizontal,
@@ -88,26 +91,39 @@ class _ProductScreenState extends State<ProductScreen> {
                       childAspectRatio: 0.5,
                     ),
                     children: product.sizes.map((s) {
-                      return GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            size = s["size"];
-                            product.price =
-                                double.tryParse(s["price"].toString());
-                          });
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(4.0)),
-                              border: Border.all(
-                                  color: s["size"] == size
-                                      ? primaryColor
-                                      : Colors.grey[500])),
-                          width: 50.0,
-                          alignment: Alignment.center,
-                          child: Text(s["size"]),
-                        ),
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: <Widget>[
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                size = s["size"];
+                                product.price =
+                                    double.tryParse(s["price"].toString());
+                              });
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(4.0)),
+                                  border: Border.all(
+                                      color: s["size"] == size
+                                          ? primaryColor
+                                          : Colors.grey[500])),
+                              width: 50.0,
+                              height: 30.0,
+                              alignment: Alignment.center,
+                              child: Text(s["size"]),
+                            ),
+                          ),
+                          Center(
+                            child: Text(
+                              "\$ "+ s["price"].toString(),
+                              style: TextStyle(
+                                  color: Colors.grey[500], fontSize: 15.0),
+                            ),
+                          ),
+                        ],
                       );
                     }).toList(),
                   ),

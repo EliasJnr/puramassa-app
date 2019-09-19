@@ -123,32 +123,49 @@ class CartScreen extends StatelessWidget {
       builder: (BuildContext context) {
         // return object of type Dialog
         return AlertDialog(
-          title: new Text("Resumo do Pedido"),
+          title: new Center(child: Text("Resumo do Pedido")),
           content: Container(
+            height: 120.0,
             color: Colors.transparent,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                Text(model.getProductsPrice().toString()),
+                MaterialButton(
+                  shape: new RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(5.0),
+                  ),
+                  minWidth: 200.0,
+                  height: 50.0,
+                  color: (Colors.green),
+                  textColor: (Colors.white),
+                  child: Text(
+                    'Confirmar Pedido',
+                    style: TextStyle(fontSize: 20.0, letterSpacing: 2.0),
+                    textAlign: TextAlign.center,
+                  ),
+                  onPressed: () {},
+                  splashColor: Color(0xff2CA25F),
+                ),
               ],
             ),
           ),
           actions: <Widget>[
-           Row(
-             crossAxisAlignment: CrossAxisAlignment.end,
-             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-             children: <Widget>[
-               new FlatButton(
-                 child: new Text(
-                   "CANCELAR",
-                   style: TextStyle(
-                       color: Theme.of(context).primaryColor, fontSize: 15.0),
-                 ),
-                 onPressed: () {
-                   Navigator.of(context).pop();
-                 },
-               ),
-             ],
-           ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                new FlatButton(
+                  child: new Text(
+                    "CANCELAR",
+                    style: TextStyle(
+                        color: Theme.of(context).primaryColor, fontSize: 15.0),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            ),
           ],
         );
       },
