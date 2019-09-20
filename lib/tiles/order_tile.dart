@@ -30,7 +30,7 @@ class OrderTile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      "Código do pedido: ${snapshot.data.documentID}",
+                      "Código do pedido: ${snapshot.data.documentID} ",
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     SizedBox(
@@ -80,13 +80,14 @@ class OrderTile extends StatelessWidget {
   }
 
   String _buildProductsText(DocumentSnapshot snapshot) {
-    String text = "Descriçao:\n";
+    String text = "Produto: ";
 
     for (LinkedHashMap p in snapshot.data["products"]) {
-      text +=
-          "${p["quantity"]} x ${p["product"]["title"]} ${p["size"]} (R\$ ${p['product']['price'].toStringAsFixed(2)})\n";
+      text += "${p["product"]["title"]} ${p["size"]} x${p["quantity"]}, "
+          "R\$ ${p['product']['price'].toStringAsFixed(2)}\n";
     }
-    text += "Total: R\$ ${snapshot.data["totalPrice"].toStringAsFixed(2)}";
+    text+="Entrega: ${snapshot.data["shipPrice"]} \n";
+    text += "Total: R\$ ${snapshot.data["totalPrice"].toStringAsFixed(2)}\n";
     return text;
   }
 
