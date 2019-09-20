@@ -9,7 +9,7 @@ class OrderScreen extends StatelessWidget {
   Widget build(BuildContext context) {
 
 
-    Future.delayed(Duration(seconds: 3)).then((_) {
+    Future.delayed(Duration(seconds: 2)).then((_) {
       Navigator.of(context).pop();
     });
 
