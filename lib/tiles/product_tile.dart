@@ -7,8 +7,9 @@ class ProductTile extends StatelessWidget {
   final String type;
   final ProductData product;
 
-  ProductTile(this.type, this.product){
-    this.product.price = double.tryParse(this.product.sizes.first['price'].toString());
+  ProductTile(this.type, this.product) {
+    this.product.price =
+        double.tryParse(this.product.sizes.first['price'].toString());
   }
 
   @override

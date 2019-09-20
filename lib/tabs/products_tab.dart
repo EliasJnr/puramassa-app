@@ -12,7 +12,7 @@ class ProductsTab extends StatelessWidget {
           return Center(child: CircularProgressIndicator());
         else {
           var dividedTiles = ListTile.divideTiles(
-            context: context,
+                  context: context,
                   tiles: snapshot.data.documents.map((doc) {
                     return CategoryTile(doc);
                   }).toList(),

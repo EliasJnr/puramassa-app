@@ -20,7 +20,10 @@ class MainTab extends StatelessWidget {
           print(startDelivery);
           print(stopDelivery);
 
-          if (stopDelivery >= int.parse(DateTime.now().hour.toInt().toString()) || startDelivery <= int.parse(DateTime.now().hour.toInt().toString()) ) {
+          if (stopDelivery >=
+                  int.parse(DateTime.now().hour.toInt().toString()) ||
+              startDelivery <=
+                  int.parse(DateTime.now().hour.toInt().toString())) {
             opened = true;
           } else {
             opened = false;

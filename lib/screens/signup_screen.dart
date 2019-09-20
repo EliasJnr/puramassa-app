@@ -98,11 +98,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     TextFormField(
                         controller: _confirmPassController,
-                        decoration: InputDecoration(hintText: "Confirmar Senha"),
+                        decoration:
+                            InputDecoration(hintText: "Confirmar Senha"),
                         obscureText: true,
-                        validator: (text) => _confirmPassController.text != _passController.text
-                            ? "Senhas não coincidem!"
-                            : null),
+                        validator: (text) =>
+                            _confirmPassController.text != _passController.text
+                                ? "Senhas não coincidem!"
+                                : null),
                     SizedBox(
                       height: 16.0,
                     ),
@@ -128,12 +130,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     TextFormField(
                         controller: _phone2Controller,
-                        decoration:
-                        InputDecoration(hintText: "Outro telefone p/ contato"),
+                        decoration: InputDecoration(
+                            hintText: "Outro telefone p/ contato"),
                         obscureText: false,
                         keyboardType: TextInputType.phone,
-                        validator: (text) =>
-                        text.isEmpty || _phoneController.text == _phone2Controller.text ? "Numero inválido!" : null),
+                        validator: (text) => text.isEmpty ||
+                                _phoneController.text == _phone2Controller.text
+                            ? "Numero inválido!"
+                            : null),
                     SizedBox(
                       height: 16.0,
                     ),

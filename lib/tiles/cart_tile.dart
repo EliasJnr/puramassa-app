@@ -13,7 +13,8 @@ class CartTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget _buildContent() {
-      if (cartProduct.productData.price == 0.0) cartProduct.productData.price = cartProduct.price;
+      if (cartProduct.productData.price == 0.0)
+        cartProduct.productData.price = cartProduct.price;
 
       CartModel.of(context).updatePrices();
 

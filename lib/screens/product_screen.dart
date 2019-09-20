@@ -118,7 +118,7 @@ class _ProductScreenState extends State<ProductScreen> {
                           ),
                           Center(
                             child: Text(
-                              "\$ "+ s["price"].toString(),
+                              "\$ " + s["price"].toString(),
                               style: TextStyle(
                                   color: Colors.grey[500], fontSize: 15.0),
                             ),

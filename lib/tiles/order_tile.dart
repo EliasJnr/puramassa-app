@@ -86,7 +86,7 @@ class OrderTile extends StatelessWidget {
       text += "${p["product"]["title"]} ${p["size"]} x${p["quantity"]}, "
           "R\$ ${p['product']['price'].toStringAsFixed(2)}\n";
     }
-    text+="Entrega: ${snapshot.data["shipPrice"]} \n";
+    text += "Entrega: ${snapshot.data["shipPrice"]} \n";
     text += "Total: R\$ ${snapshot.data["totalPrice"].toStringAsFixed(2)}\n";
     return text;
   }
