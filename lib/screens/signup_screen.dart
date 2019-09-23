@@ -17,8 +17,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passController = TextEditingController();
+  final _confirmPassController = TextEditingController();
   final _addressController = TextEditingController();
   final _phoneController = MaskedTextController(mask: "(00) 00000-0000");
+  final _phone2Controller = MaskedTextController(mask: "(00) 00000-0000");
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -54,29 +56,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       validator: (cpfcnpj) {
                         if (cpfcnpj.isEmpty) return "CPF/CNPJ inválido!";
 
-                        if (CPFValidator.isValid(cpfcnpj) ||
-                            CNPJValidator.isValid(cpfcnpj)) {
-                          return null;
-                        } else {
-                          return "CPF/CNPJ inválido!";
-                        }
+                        return CPFValidator.isValid(cpfcnpj) ||
+                                CNPJValidator.isValid(cpfcnpj)
+                            ? null
+                            : "CPF/CNPJ inválido!";
                       },
                     ),
                     SizedBox(
                       height: 16.0,
                     ),
                     TextFormField(
-                      controller: _nameController,
-                      decoration:
-                          InputDecoration(hintText: "Nome ou Razão Social"),
-                      validator: (text) {
-                        if (text.isEmpty) {
-                          return "Nome/Razão Social inválido!";
-                        } else {
-                          return null;
-                        }
-                      },
-                    ),
+                        controller: _nameController,
+                        decoration:
+                            InputDecoration(hintText: "Nome ou Razão Social"),
+                        validator: (text) => text.isEmpty
+                            ? "Nome/Razão Social inválido!"
+                            : null),
                     SizedBox(
                       height: 16.0,
                     ),
@@ -96,8 +91,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         decoration: InputDecoration(hintText: "Senha"),
                         obscureText: true,
                         validator: (text) => text.isEmpty || text.length < 6
-                            ? "Senha inválida!"
+                            ? "Senha inválida! * min 6 dígitos "
                             : null),
+                    SizedBox(
+                      height: 16.0,
+                    ),
+                    TextFormField(
+                        controller: _confirmPassController,
+                        decoration:
+                            InputDecoration(hintText: "Confirmar Senha"),
+                        obscureText: true,
+                        validator: (text) =>
+                            _confirmPassController.text != _passController.text
+                                ? "Senhas não coincidem!"
+                                : null),
                     SizedBox(
                       height: 16.0,
                     ),
@@ -121,6 +128,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     SizedBox(
                       height: 16.0,
                     ),
+                    TextFormField(
+                        controller: _phone2Controller,
+                        decoration: InputDecoration(
+                            hintText: "Outro telefone p/ contato"),
+                        obscureText: false,
+                        keyboardType: TextInputType.phone,
+                        validator: (text) => text.isEmpty ||
+                                _phoneController.text == _phone2Controller.text
+                            ? "Numero inválido!"
+                            : null),
+                    SizedBox(
+                      height: 16.0,
+                    ),
                     SizedBox(
                       height: 44.0,
                       child: RaisedButton(
@@ -137,7 +157,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               "name": _nameController.text,
                               "email": _emailController.text,
                               "address": _addressController.text,
-                              "phone": _phoneController.text
+                              "phone": _phoneController.text,
+                              "phone2": _phone2Controller.text
                             };
 
                             model.signUp(

@@ -6,13 +6,17 @@ import 'package:loja_virtual/screens/order_screen.dart';
 import 'package:loja_virtual/tiles/cart_tile.dart';
 import 'package:loja_virtual/widgets/cart_price.dart';
 import 'package:loja_virtual/widgets/discount_card.dart';
-import 'package:loja_virtual/widgets/ship_card.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class CartScreen extends StatelessWidget {
+  final GlobalKey _scaffoldKey;
+
+  CartScreen() : _scaffoldKey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         title: Text("Meu Carrinho"),
         actions: <Widget>[
@@ -90,17 +94,158 @@ class CartScreen extends StatelessWidget {
                 }).toList(),
               ),
               DiscountCard(),
-              ShipCard(),
+              // ShipCard(),
               CartPrice(() async {
-                String orderId = await model.finishOrder();
-                if (orderId != null)
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (context) => OrderScreen(orderId)));
+                if (model.getProductsPrice() -
+                        model.getDiscount() +
+                        model.getShipPrice() <
+                    30.0) {
+                  Scaffold.of(context).showSnackBar(SnackBar(
+                    content: Text("Valor mínimo por pedido \$30.0 !"),
+                    backgroundColor: Colors.redAccent,
+                  ));
+                } else {
+                  _showDialog(model);
+                }
               })
             ],
           );
         }
       }),
+    );
+  }
+
+  void _showDialog(CartModel model) {
+    showDialog(
+      barrierDismissible: false,
+      context: _scaffoldKey.currentContext,
+      builder: (BuildContext context) {
+        List<TableRow> listRows = List();
+
+        listRows.add(_buildTableRow("ITEM,QTD,TOTAL"));
+
+        model.products
+            .map((product) =>
+                product.productData.title +
+                "\n" +
+                product.size +
+                ", x" +
+                product.quantity.toString() +
+                ", \$ " +
+                product.productData.price.toStringAsFixed(2))
+            .forEach((str) {
+          listRows.add(_buildTableRow(str));
+        });
+
+        if (model.getDiscount() > 0.0)
+          listRows.add(_buildTableRow(
+              "DESCONTO,, \$ " + model.getDiscount().toStringAsFixed(2)));
+
+        listRows.add(_buildTableRow(
+            "ENTREGA,, \$ " + model.getShipPrice().toStringAsFixed(2)));
+
+        double total = model.getProductsPrice() -
+            model.getDiscount() +
+            model.getShipPrice();
+
+        listRows.add(_buildTableRow("TOTAL,, \$ " + total.toStringAsFixed(2)));
+
+        return AlertDialog(
+            title: new Center(child: Text("Resumo do Pedido")),
+            content: Container(
+              width: 600.0,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Table(
+                      children: listRows,
+                    ),
+                    SizedBox(
+                      height: 20.0,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        MaterialButton(
+                          shape: new RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(2.0),
+                          ),
+                          height: 30.0,
+                          color: Colors.grey[500],
+                          textColor: (Colors.white),
+                          child: Text(
+                            'VOLTAR',
+                            style:
+                                TextStyle(fontSize: 15.0, letterSpacing: 1.0),
+                            textAlign: TextAlign.center,
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          splashColor: Colors.grey,
+                        ),
+                        MaterialButton(
+                          shape: new RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(2.0),
+                          ),
+                          height: 30.0,
+                          color: Theme.of(context).primaryColor,
+                          textColor: (Colors.white),
+                          child: Text(
+                            'CONFIRMAR',
+                            style:
+                                TextStyle(fontSize: 15.0, letterSpacing: 1.0),
+                            textAlign: TextAlign.center,
+                          ),
+                          onPressed: () async {
+                            Navigator.pop(context);
+                            String orderId = await model.finishOrder();
+                            if (orderId != null)
+                              Navigator.of(_scaffoldKey.currentContext)
+                                  .pushReplacement(MaterialPageRoute(
+                                      builder: (context) =>
+                                          OrderScreen(orderId)));
+                          },
+                          splashColor: Colors.grey,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ));
+      },
+    );
+  }
+
+  loadRowsProductsTable(List<String> list) {
+    list.forEach((f) {
+      return _buildTableRow(f);
+    });
+  }
+
+  TableRow _buildTableRow(String listOfNames) {
+    return TableRow(
+      children: listOfNames.split(',').map((name) {
+        return Container(
+          alignment: Alignment.center,
+          child: Text(name,
+              style: TextStyle(
+                  fontSize: 13.0,
+                  fontWeight: name == "TOTAL" ||
+                          name == "QTD" ||
+                          name == "ITEM" ||
+                          name == "ENTREGA" ||
+                          name == "DESCONTO"
+                      ? FontWeight.bold
+                      : FontWeight.normal)),
+          padding: EdgeInsets.all(8.0),
+        );
+      }).toList(),
     );
   }
 }

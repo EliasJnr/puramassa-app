@@ -36,7 +36,7 @@ class CustomDrawer extends StatelessWidget {
                       top: 8.0,
                       left: 0.0,
                       child: Text(
-                        "shop",
+                        "PuraMassa",
                         style: TextStyle(
                             fontSize: 34.0, fontWeight: FontWeight.bold),
                       ),
@@ -86,7 +86,7 @@ class CustomDrawer extends StatelessWidget {
               Divider(),
               DrawerTile(Icons.home, "Início", pageController, 0),
               DrawerTile(Icons.list, "Produtos", pageController, 1),
-              DrawerTile(Icons.location_on, "Encomenda?", pageController, 2),
+              DrawerTile(Icons.location_on, "Contato", pageController, 2),
               DrawerTile(
                   Icons.playlist_add_check, "Meus Pedidos", pageController, 3),
             ],

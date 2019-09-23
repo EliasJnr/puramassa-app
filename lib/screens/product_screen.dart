@@ -7,6 +7,7 @@ import 'package:loja_virtual/models/cart_model.dart';
 import 'package:loja_virtual/models/user_model.dart';
 import 'package:loja_virtual/screens/cart_screen.dart';
 import 'package:loja_virtual/screens/login_screen.dart';
+import 'package:toast/toast.dart';
 
 class ProductScreen extends StatefulWidget {
   final ProductData product;
@@ -22,6 +23,12 @@ class _ProductScreenState extends State<ProductScreen> {
   String size;
 
   _ProductScreenState(this.product);
+
+  @override
+  void initState() {
+    super.initState();
+    size = this.product.sizes.first['size'];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +79,10 @@ class _ProductScreenState extends State<ProductScreen> {
                   style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16.0),
                 ),
                 SizedBox(
-                  height: 40.0,
+                  height: 5.0,
+                ),
+                SizedBox(
+                  height: 60.0,
                   child: GridView(
                     padding: EdgeInsets.symmetric(vertical: 4.0),
                     scrollDirection: Axis.horizontal,
@@ -82,26 +92,39 @@ class _ProductScreenState extends State<ProductScreen> {
                       childAspectRatio: 0.5,
                     ),
                     children: product.sizes.map((s) {
-
-                      return GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            size = s["size"];
-                            product.price = double.tryParse(s["price"].toString());
-                          });
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(4.0)),
-                              border: Border.all(
-                                  color: s["size"] == size
-                                      ? primaryColor
-                                      : Colors.grey[500])),
-                          width: 50.0,
-                          alignment: Alignment.center,
-                          child: Text(s["size"]),
-                        ),
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: <Widget>[
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                size = s["size"];
+                                product.price =
+                                    double.tryParse(s["price"].toString());
+                              });
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(4.0)),
+                                  border: Border.all(
+                                      color: s["size"] == size
+                                          ? primaryColor
+                                          : Colors.grey[500])),
+                              width: 50.0,
+                              height: 30.0,
+                              alignment: Alignment.center,
+                              child: Text(s["size"]),
+                            ),
+                          ),
+                          Center(
+                            child: Text(
+                              "\$ " + s["price"].toString(),
+                              style: TextStyle(
+                                  color: Colors.grey[500], fontSize: 15.0),
+                            ),
+                          ),
+                        ],
                       );
                     }).toList(),
                   ),
@@ -122,10 +145,20 @@ class _ProductScreenState extends State<ProductScreen> {
                               cartProduct.category = product.category;
                               cartProduct.productData = product;
 
-                              CartModel.of(context).addCartItem(cartProduct);
+                              List itemInCart = CartModel.of(context)
+                                  .verifyItemInCart(cartProduct.pid, size);
+                              if (itemInCart.length > 0)
+                                Toast.show(
+                                    "Item ja cadastrado no pedido.\n Alterar quantidade no carrinho",
+                                    context,
+                                    duration: Toast.LENGTH_LONG,
+                                    gravity: Toast.BOTTOM);
+                              else {
+                                CartModel.of(context).addCartItem(cartProduct);
 
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => CartScreen()));
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => CartScreen()));
+                              }
                             } else {
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => LoginScreen()));
