@@ -153,95 +153,98 @@ class CartScreen extends StatelessWidget {
             title: new Center(child: Text("Resumo do Pedido")),
             content: Container(
               width: 600.0,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  Table(
-                    border: TableBorder(
-                      bottom: BorderSide(
-                        color: Theme.of(context).primaryColor,
-                        style: BorderStyle.solid,
-                        width: 1.0,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Table(
+                      border: TableBorder(
+                        bottom: BorderSide(
+                          color: Theme.of(context).primaryColor,
+                          style: BorderStyle.solid,
+                          width: 1.0,
+                        ),
+                        right: BorderSide(
+                          color: Theme.of(context).primaryColor,
+                          style: BorderStyle.solid,
+                          width: 1.0,
+                        ),
+                        left: BorderSide(
+                          color: Theme.of(context).primaryColor,
+                          style: BorderStyle.solid,
+                          width: 1.0,
+                        ),
+                        top: BorderSide(
+                          color: Theme.of(context).primaryColor,
+                          style: BorderStyle.solid,
+                          width: 1.0,
+                        ),
+                        horizontalInside: BorderSide(
+                          color: Theme.of(context).primaryColor,
+                          style: BorderStyle.solid,
+                          width: 1.0,
+                        ),
+                        verticalInside: BorderSide(
+                          color: Theme.of(context).primaryColor,
+                          style: BorderStyle.solid,
+                          width: 1.0,
+                        ),
                       ),
-                      right: BorderSide(
-                        color: Theme.of(context).primaryColor,
-                        style: BorderStyle.solid,
-                        width: 1.0,
-                      ),
-                      left: BorderSide(
-                        color: Theme.of(context).primaryColor,
-                        style: BorderStyle.solid,
-                        width: 1.0,
-                      ),
-                      top: BorderSide(
-                        color: Theme.of(context).primaryColor,
-                        style: BorderStyle.solid,
-                        width: 1.0,
-                      ),
-                      horizontalInside: BorderSide(
-                        color: Theme.of(context).primaryColor,
-                        style: BorderStyle.solid,
-                        width: 1.0,
-                      ),
-                      verticalInside: BorderSide(
-                        color: Theme.of(context).primaryColor,
-                        style: BorderStyle.solid,
-                        width: 1.0,
-                      ),
+                      children: listRows,
                     ),
-                    children: listRows,
-                  ),
-                  SizedBox(
-                    height: 20.0,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      MaterialButton(
-                        shape: new RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(5.0),
+                    SizedBox(
+                      height: 20.0,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        MaterialButton(
+                          shape: new RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(5.0),
+                          ),
+                          height: 30.0,
+                          color: Colors.grey[500],
+                          textColor: (Colors.white),
+                          child: Text(
+                            'VOLTAR',
+                            style: TextStyle(fontSize: 15.0, letterSpacing: 1.0),
+                            textAlign: TextAlign.center,
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          splashColor: Colors.grey,
                         ),
-                        height: 30.0,
-                        color: Colors.grey[500],
-                        textColor: (Colors.white),
-                        child: Text(
-                          'VOLTAR',
-                          style: TextStyle(fontSize: 15.0, letterSpacing: 1.0),
-                          textAlign: TextAlign.center,
+                        MaterialButton(
+                          shape: new RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(5.0),
+                          ),
+                          height: 30.0,
+                          color: Theme.of(context).primaryColor,
+                          textColor: (Colors.white),
+                          child: Text(
+                            'CONFIRMAR',
+                            style: TextStyle(fontSize: 15.0, letterSpacing: 1.0),
+                            textAlign: TextAlign.center,
+                          ),
+                          onPressed: () async {
+                            Navigator.pop(context);
+                            String orderId = await model.finishOrder();
+                            if (orderId != null)
+                              Navigator.of(_scaffoldKey.currentContext)
+                                  .pushReplacement(MaterialPageRoute(
+                                      builder: (context) =>
+                                          OrderScreen(orderId)));
+                          },
+                          splashColor: Colors.grey,
                         ),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        splashColor: Colors.grey,
-                      ),
-                      MaterialButton(
-                        shape: new RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(5.0),
-                        ),
-                        height: 30.0,
-                        color: Theme.of(context).primaryColor,
-                        textColor: (Colors.white),
-                        child: Text(
-                          'CONFIRMAR',
-                          style: TextStyle(fontSize: 15.0, letterSpacing: 1.0),
-                          textAlign: TextAlign.center,
-                        ),
-                        onPressed: () async {
-                          Navigator.pop(context);
-                          String orderId = await model.finishOrder();
-                          if (orderId != null)
-                            Navigator.of(_scaffoldKey.currentContext)
-                                .pushReplacement(MaterialPageRoute(
-                                    builder: (context) =>
-                                        OrderScreen(orderId)));
-                        },
-                        splashColor: Colors.grey,
-                      ),
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ));
       },
@@ -261,7 +264,7 @@ class CartScreen extends StatelessWidget {
           alignment: Alignment.center,
           child: Text(name,
               style: TextStyle(
-                  fontSize: 14.0,
+                  fontSize: 13.0,
                   fontWeight: name == "TOTAL" ||
                           name == "QTD" ||
                           name == "ITEM" ||
