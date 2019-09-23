@@ -162,38 +162,6 @@ class CartScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
                     Table(
-//                      border: TableBorder(
-//                        bottom: BorderSide(
-//                          color: Theme.of(context).primaryColor,
-//                          style: BorderStyle.solid,
-//                          width: 1.0,
-//                        ),
-//                        right: BorderSide(
-//                          color: Theme.of(context).primaryColor,
-//                          style: BorderStyle.solid,
-//                          width: 1.0,
-//                        ),
-//                        left: BorderSide(
-//                          color: Theme.of(context).primaryColor,
-//                          style: BorderStyle.solid,
-//                          width: 1.0,
-//                        ),
-//                        top: BorderSide(
-//                          color: Theme.of(context).primaryColor,
-//                          style: BorderStyle.solid,
-//                          width: 1.0,
-//                        ),
-//                        horizontalInside: BorderSide(
-//                          color: Theme.of(context).primaryColor,
-//                          style: BorderStyle.solid,
-//                          width: 1.0,
-//                        ),
-//                        verticalInside: BorderSide(
-//                          color: Theme.of(context).primaryColor,
-//                          style: BorderStyle.solid,
-//                          width: 1.0,
-//                        ),
-//                      ),
                       children: listRows,
                     ),
                     SizedBox(

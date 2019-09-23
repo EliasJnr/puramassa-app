@@ -19,7 +19,6 @@ class CartTile extends StatelessWidget {
         CartModel.of(context).updatePrices();
       }
 
-      print('teste');
       return Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
