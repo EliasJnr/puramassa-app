@@ -44,15 +44,6 @@ class PlaceTile extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
-//              FlatButton(
-//                child: Text("Ver no Mapa"),
-//                textColor: Colors.blue,
-//                padding: EdgeInsets.zero,
-//                onPressed: () {
-//                  launch(
-//                      "http://www.google.com/maps/search/?api=1&query=${snapshot.data["lat"]},${snapshot.data["long"]}");
-//                },
-//              ),
               FlatButton(
                 child: Text("WhatsApp"),
                 textColor: Colors.blue,
@@ -77,7 +68,7 @@ class PlaceTile extends StatelessWidget {
   }
 
   void whatsAppOpen(String phone, BuildContext context) async {
-    var wppURL = "whatsapp://send?phone=$phone&text=Olá";
+    var wppURL = "whatsapp://send?phone=$phone&text=Olá%20quero%20saber%20mais%20!!";
     await canLaunch(wppURL) ? launch(wppURL) : wppNotInstalled(context);
   }
 
