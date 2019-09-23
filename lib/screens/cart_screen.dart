@@ -127,6 +127,8 @@ class CartScreen extends StatelessWidget {
         model.products
             .map((product) =>
                 product.productData.title +
+                "\n" +
+                product.size +
                 ", x" +
                 product.quantity.toString() +
                 ", \$ " +
@@ -137,17 +139,16 @@ class CartScreen extends StatelessWidget {
 
         if (model.getDiscount() > 0.0)
           listRows.add(_buildTableRow(
-              "DESCONTO, x1, \$ " + model.getDiscount().toStringAsFixed(2)));
+              "DESCONTO,, \$ " + model.getDiscount().toStringAsFixed(2)));
 
         listRows.add(_buildTableRow(
-            "ENTREGA, x1, \$ " + model.getShipPrice().toStringAsFixed(2)));
+            "ENTREGA,, \$ " + model.getShipPrice().toStringAsFixed(2)));
 
         double total = model.getProductsPrice() -
             model.getDiscount() +
             model.getShipPrice();
 
-        listRows
-            .add(_buildTableRow("TOTAL, x1, \$ " + total.toStringAsFixed(2)));
+        listRows.add(_buildTableRow("TOTAL,, \$ " + total.toStringAsFixed(2)));
 
         return AlertDialog(
             title: new Center(child: Text("Resumo do Pedido")),
@@ -161,38 +162,38 @@ class CartScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
                     Table(
-                      border: TableBorder(
-                        bottom: BorderSide(
-                          color: Theme.of(context).primaryColor,
-                          style: BorderStyle.solid,
-                          width: 1.0,
-                        ),
-                        right: BorderSide(
-                          color: Theme.of(context).primaryColor,
-                          style: BorderStyle.solid,
-                          width: 1.0,
-                        ),
-                        left: BorderSide(
-                          color: Theme.of(context).primaryColor,
-                          style: BorderStyle.solid,
-                          width: 1.0,
-                        ),
-                        top: BorderSide(
-                          color: Theme.of(context).primaryColor,
-                          style: BorderStyle.solid,
-                          width: 1.0,
-                        ),
-                        horizontalInside: BorderSide(
-                          color: Theme.of(context).primaryColor,
-                          style: BorderStyle.solid,
-                          width: 1.0,
-                        ),
-                        verticalInside: BorderSide(
-                          color: Theme.of(context).primaryColor,
-                          style: BorderStyle.solid,
-                          width: 1.0,
-                        ),
-                      ),
+//                      border: TableBorder(
+//                        bottom: BorderSide(
+//                          color: Theme.of(context).primaryColor,
+//                          style: BorderStyle.solid,
+//                          width: 1.0,
+//                        ),
+//                        right: BorderSide(
+//                          color: Theme.of(context).primaryColor,
+//                          style: BorderStyle.solid,
+//                          width: 1.0,
+//                        ),
+//                        left: BorderSide(
+//                          color: Theme.of(context).primaryColor,
+//                          style: BorderStyle.solid,
+//                          width: 1.0,
+//                        ),
+//                        top: BorderSide(
+//                          color: Theme.of(context).primaryColor,
+//                          style: BorderStyle.solid,
+//                          width: 1.0,
+//                        ),
+//                        horizontalInside: BorderSide(
+//                          color: Theme.of(context).primaryColor,
+//                          style: BorderStyle.solid,
+//                          width: 1.0,
+//                        ),
+//                        verticalInside: BorderSide(
+//                          color: Theme.of(context).primaryColor,
+//                          style: BorderStyle.solid,
+//                          width: 1.0,
+//                        ),
+//                      ),
                       children: listRows,
                     ),
                     SizedBox(
@@ -203,14 +204,15 @@ class CartScreen extends StatelessWidget {
                       children: <Widget>[
                         MaterialButton(
                           shape: new RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(5.0),
+                            borderRadius: new BorderRadius.circular(2.0),
                           ),
                           height: 30.0,
                           color: Colors.grey[500],
                           textColor: (Colors.white),
                           child: Text(
                             'VOLTAR',
-                            style: TextStyle(fontSize: 15.0, letterSpacing: 1.0),
+                            style:
+                                TextStyle(fontSize: 15.0, letterSpacing: 1.0),
                             textAlign: TextAlign.center,
                           ),
                           onPressed: () {
@@ -220,14 +222,15 @@ class CartScreen extends StatelessWidget {
                         ),
                         MaterialButton(
                           shape: new RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(5.0),
+                            borderRadius: new BorderRadius.circular(2.0),
                           ),
                           height: 30.0,
                           color: Theme.of(context).primaryColor,
                           textColor: (Colors.white),
                           child: Text(
                             'CONFIRMAR',
-                            style: TextStyle(fontSize: 15.0, letterSpacing: 1.0),
+                            style:
+                                TextStyle(fontSize: 15.0, letterSpacing: 1.0),
                             textAlign: TextAlign.center,
                           ),
                           onPressed: () async {

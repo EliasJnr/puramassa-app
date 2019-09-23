@@ -20,8 +20,13 @@ class CartModel extends Model {
     if (user.isLoggedIn()) _loadCartItems();
   }
 
+  verifyItemInCart(String pid, String size) {
+    return products.where((item) => item.pid == pid && size == item.size).toList();
+  }
+
   void addCartItem(CartProduct cartProduct) {
     products.add(cartProduct);
+
     Firestore.instance
         .collection("users")
         .document(user.firebaseUser.uid)

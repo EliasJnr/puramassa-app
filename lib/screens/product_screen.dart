@@ -7,6 +7,7 @@ import 'package:loja_virtual/models/cart_model.dart';
 import 'package:loja_virtual/models/user_model.dart';
 import 'package:loja_virtual/screens/cart_screen.dart';
 import 'package:loja_virtual/screens/login_screen.dart';
+import 'package:toast/toast.dart';
 
 class ProductScreen extends StatefulWidget {
   final ProductData product;
@@ -144,10 +145,20 @@ class _ProductScreenState extends State<ProductScreen> {
                               cartProduct.category = product.category;
                               cartProduct.productData = product;
 
-                              CartModel.of(context).addCartItem(cartProduct);
+                              List itemInCart = CartModel.of(context)
+                                  .verifyItemInCart(cartProduct.pid, size);
+                              if (itemInCart.length > 0)
+                                Toast.show(
+                                    "Item ja cadastrado no pedido.\n Alterar quantidade no carrinho",
+                                    context,
+                                    duration: Toast.LENGTH_LONG,
+                                    gravity: Toast.BOTTOM);
+                              else {
+                                CartModel.of(context).addCartItem(cartProduct);
 
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => CartScreen()));
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => CartScreen()));
+                              }
                             } else {
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => LoginScreen()));
