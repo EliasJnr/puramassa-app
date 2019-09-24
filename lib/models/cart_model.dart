@@ -21,7 +21,17 @@ class CartModel extends Model {
   }
 
   verifyItemInCart(String pid, String size) {
-    return products.where((item) => item.pid == pid && size == item.size).toList();
+    return products
+        .where((item) => item.pid == pid && size == item.size)
+        .toList();
+  }
+
+  verifyOrderOpen() async {
+    return await Firestore.instance
+        .collection("users")
+        .document(user.firebaseUser.uid)
+        .collection("orders")
+        .getDocuments();
   }
 
   void addCartItem(CartProduct cartProduct) {

@@ -105,7 +105,17 @@ class CartScreen extends StatelessWidget {
                     backgroundColor: Colors.redAccent,
                   ));
                 } else {
-                  _showDialog(model);
+
+                  model.verifyOrderOpen().then((items){
+                    if(items.documents.length > 0){
+                      Scaffold.of(context).showSnackBar(SnackBar(
+                        content: Text("Existe pedido em andamento!"),
+                        backgroundColor: Colors.redAccent,
+                      ));
+                    } else {
+                      _showDialog(model);
+                    }
+                  });
                 }
               })
             ],
