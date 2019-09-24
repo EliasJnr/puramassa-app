@@ -36,6 +36,8 @@ dependencies:
   cpf_cnpj_validator: ^1.0.5
   flutter_launcher_icons: ^0.7.3
   toast: ^0.1.5
+  firebase_messaging: ^5.1.6
+
 
 
 dev_dependencies:
