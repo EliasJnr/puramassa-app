@@ -1,14 +1,19 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class UserModel extends Model {
   bool isLoading = false;
-
   FirebaseAuth _auth = FirebaseAuth.instance;
   FirebaseUser firebaseUser;
   Map<String, dynamic> userData = Map();
+  FirebaseMessaging firebaseMessaging;
+
+  UserModel() : firebaseMessaging = FirebaseMessaging();
 
   static UserModel of(BuildContext context) =>
       ScopedModel.of<UserModel>(context);
@@ -17,6 +22,7 @@ class UserModel extends Model {
   void addListener(VoidCallback listener) {
     super.addListener(listener);
     _loadCurrentUser();
+    firebaseCloudMessagingListeners();
   }
 
   void signUp(
@@ -69,6 +75,33 @@ class UserModel extends Model {
       onFail();
       isLoading = false;
       notifyListeners();
+    });
+  }
+
+  void firebaseCloudMessagingListeners() {
+    if (Platform.isIOS) iOSPermission();
+
+    firebaseMessaging.getToken().then((token) {
+      if (isLoggedIn()) updateToken(token);
+    });
+  }
+
+  updateToken(token) async {
+    DocumentSnapshot docUser = await Firestore.instance
+        .collection("users")
+        .document(firebaseUser.uid)
+        .get();
+    docUser.data["token"] = token;
+    print(token);
+    docUser.reference.updateData(docUser.data);
+  }
+
+  void iOSPermission() {
+    firebaseMessaging.requestNotificationPermissions(
+        IosNotificationSettings(sound: true, badge: true, alert: true));
+    firebaseMessaging.onIosSettingsRegistered
+        .listen((IosNotificationSettings settings) {
+      print("Settings registered: $settings");
     });
   }
 

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:loja_virtual/models/user_model.dart';
-import 'package:loja_virtual/screens/signup_screen.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -17,7 +16,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final _passController = TextEditingController();
 
   void whatsAppOpen() async {
-    var whatsappUrl = "whatsapp://send?phone=5592982611237&text=Olá%20quero%20agendar%20uma%20visita%20!!";
+    var whatsappUrl =
+        "whatsapp://send?phone=5592982611237&text=Olá%20quero%20agendar%20uma%20visita%20!!";
     await canLaunch(whatsappUrl) ? launch(whatsappUrl) : wppNotInstalled();
   }
 
@@ -44,8 +44,6 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             textColor: Colors.white,
             onPressed: () {
-//              Navigator.of(context).pushReplacement(
-//                  MaterialPageRoute(builder: (context) => SignUpScreen()));
               whatsAppOpen();
             },
           )
