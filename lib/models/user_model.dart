@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -79,8 +77,6 @@ class UserModel extends Model {
   }
 
   void firebaseCloudMessagingListeners() {
-    if (Platform.isIOS) iOSPermission();
-
     firebaseMessaging.getToken().then((token) {
       if (isLoggedIn()) updateToken(token);
     });
@@ -92,17 +88,7 @@ class UserModel extends Model {
         .document(firebaseUser.uid)
         .get();
     docUser.data["token"] = token;
-    print(token);
     docUser.reference.updateData(docUser.data);
-  }
-
-  void iOSPermission() {
-    firebaseMessaging.requestNotificationPermissions(
-        IosNotificationSettings(sound: true, badge: true, alert: true));
-    firebaseMessaging.onIosSettingsRegistered
-        .listen((IosNotificationSettings settings) {
-      print("Settings registered: $settings");
-    });
   }
 
   void signOut() async {
