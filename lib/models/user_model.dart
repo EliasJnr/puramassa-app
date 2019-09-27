@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class UserModel extends Model {
@@ -9,9 +10,20 @@ class UserModel extends Model {
   FirebaseAuth _auth = FirebaseAuth.instance;
   FirebaseUser firebaseUser;
   Map<String, dynamic> userData = Map();
-  FirebaseMessaging firebaseMessaging;
+  FirebaseMessaging _firebaseMessaging;
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 
-  UserModel() : firebaseMessaging = FirebaseMessaging();
+  UserModel() {
+    _firebaseMessaging = FirebaseMessaging();
+    flutterLocalNotificationsPlugin = new FlutterLocalNotificationsPlugin();
+    var android = new AndroidInitializationSettings('@mipmap/ic_launcher');
+    var iOS = new IOSInitializationSettings();
+    var initSetttings = new InitializationSettings(android, iOS);
+    flutterLocalNotificationsPlugin.initialize(initSetttings,
+        onSelectNotification: onSelectNotification);
+  }
+
+  Future onSelectNotification(String payload) {}
 
   static UserModel of(BuildContext context) =>
       ScopedModel.of<UserModel>(context);
@@ -65,6 +77,8 @@ class UserModel extends Model {
         .then((user) async {
       firebaseUser = user;
       await _loadCurrentUser();
+      await updateToken(
+          await _firebaseMessaging.getToken().then((value) => value));
 
       onSuccess();
       isLoading = false;
@@ -77,8 +91,35 @@ class UserModel extends Model {
   }
 
   void firebaseCloudMessagingListeners() {
-    firebaseMessaging.getToken().then((token) {
+    _firebaseMessaging.getToken().then((token) {
       if (isLoggedIn()) updateToken(token);
+    });
+    _firebaseMessaging.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        print("onMessage: $message");
+        showNotification(
+            message['notification']['title'], message['notification']['body']);
+      },
+      onLaunch: (Map<String, dynamic> message) async {
+        print("onLaunch: $message");
+        showNotification(
+            message['notification']['title'], message['notification']['body']);
+      },
+      onResume: (Map<String, dynamic> message) async {
+        print("onResume: $message");
+        showNotification(
+            message['notification']['title'], message['notification']['body']);
+      },
+    );
+    _firebaseMessaging.requestNotificationPermissions(
+        const IosNotificationSettings(sound: true, badge: true, alert: true));
+    _firebaseMessaging.onIosSettingsRegistered
+        .listen((IosNotificationSettings settings) {
+      print("Settings registered: $settings");
+    });
+    _firebaseMessaging.getToken().then((String token) {
+      assert(token != null);
+      print(token);
     });
   }
 
@@ -91,7 +132,17 @@ class UserModel extends Model {
     docUser.reference.updateData(docUser.data);
   }
 
+  showNotification(String title, String body) async {
+    var android = new AndroidNotificationDetails(
+        'channel id', 'channel NAME', 'CHANNEL DESCRIPTION',
+        priority: Priority.Max, importance: Importance.Max);
+    var iOS = new IOSNotificationDetails();
+    var platform = new NotificationDetails(android, iOS);
+    await flutterLocalNotificationsPlugin.show(0, title, body, platform);
+  }
+
   void signOut() async {
+    await updateToken("");
     await _auth.signOut();
     userData = Map();
     firebaseUser = null;
