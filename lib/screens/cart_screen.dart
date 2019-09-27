@@ -9,9 +9,7 @@ import 'package:loja_virtual/widgets/discount_card.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class CartScreen extends StatelessWidget {
-  final GlobalKey _scaffoldKey;
-
-  CartScreen() : _scaffoldKey = GlobalKey();
+  static final GlobalKey _scaffoldKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -105,9 +103,8 @@ class CartScreen extends StatelessWidget {
                     backgroundColor: Colors.redAccent,
                   ));
                 } else {
-
-                  model.verifyOrderOpen().then((items){
-                    if(items.documents.length > 0){
+                  model.verifyOrderOpen().then((items) {
+                    if (items.documents.length > 0) {
                       Scaffold.of(context).showSnackBar(SnackBar(
                         content: Text("Existe pedido em andamento!"),
                         backgroundColor: Colors.redAccent,
@@ -245,17 +242,21 @@ class CartScreen extends StatelessWidget {
           alignment: Alignment.center,
           child: Text(name,
               style: TextStyle(
-                  fontSize: 13.0,
-                  fontWeight: name == "TOTAL" ||
-                          name == "QTD" ||
-                          name == "ITEM" ||
-                          name == "ENTREGA" ||
-                          name == "DESCONTO"
+                  fontSize: 14.0,
+                  fontWeight: labelIsColumnName(name)
                       ? FontWeight.bold
                       : FontWeight.normal)),
-          padding: EdgeInsets.all(8.0),
+          padding: EdgeInsets.all(6.0),
         );
       }).toList(),
     );
+  }
+
+  labelIsColumnName(String name) {
+    return name == "TOTAL" ||
+        name == "QTD" ||
+        name == "ITEM" ||
+        name == "ENTREGA" ||
+        name == "DESCONTO";
   }
 }

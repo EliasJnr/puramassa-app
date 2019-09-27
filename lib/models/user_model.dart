@@ -125,7 +125,6 @@ class UserModel extends Model {
         .document(firebaseUser.uid)
         .get();
     docUser.data["token"] = token;
-    print(token);
     await docUser.reference.updateData(docUser.data);
   }
 
