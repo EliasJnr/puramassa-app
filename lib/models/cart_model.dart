@@ -23,14 +23,14 @@ class CartModel extends Model {
     if (user.isLoggedIn()) _loadCartItems();
   }
 
-  Future setUpNotification() async {
+  Future setUpNotification(String bodyNotification) async {
     DocumentSnapshot doc = await Firestore.instance
         .collection("users")
         .document("hNthpVRUHGVKD7Z4Jap4rcMhFB73")
         .get();
 
     _notificationService = new NotificationService(doc.data["token"]);
-    _notificationService.sendNewRequest("Cliente: teste");
+    _notificationService.sendNewRequest(bodyNotification);
   }
 
   verifyItemInCart(String pid, String size) {
@@ -168,7 +168,12 @@ class CartModel extends Model {
     discountPercentage = 0;
     couponCode = null;
     isLoading = false;
-    setUpNotification();
+
+    String bodyNotification = "Total: " +
+        (productsPrice.toDouble() - discount.toDouble() + shipPrice.toDouble())
+            .toStringAsFixed(2);
+    bodyNotification += "\nCliente: " + user.firebaseUser.email;
+    setUpNotification(bodyNotification);
     notifyListeners();
 
     return refOrder.documentID;

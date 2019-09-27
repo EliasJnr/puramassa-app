@@ -9,7 +9,7 @@ class NotificationService {
 
   sendNewRequest(String info) {
     String body =
-        "{\"notification\": {\"body\": \"info\",\"title\": \"Novo Pedido\"}, \"priority\": \"high\", \"data\": {\"click_action\": \"FLUTTER_NOTIFICATION_CLICK\", \"id\": \"1\", \"status\": \"done\"}, \"to\": \"$_fcmToken\"}";
+        "{\"notification\": {\"body\": \"$info\",\"title\": \"Novo Pedido\"}, \"priority\": \"high\", \"data\": {\"click_action\": \"FLUTTER_NOTIFICATION_CLICK\", \"id\": \"1\", \"status\": \"done\"}, \"to\": \"$_fcmToken\"}";
     http.post("https://fcm.googleapis.com/fcm/send", body: body, headers: {
       "Content-Type": "application/json",
       "Authorization": "key=$_fcmServerKey"
