@@ -129,7 +129,7 @@ class UserModel extends Model {
         .document(firebaseUser.uid)
         .get();
     docUser.data["token"] = token;
-    docUser.reference.updateData(docUser.data);
+    await docUser.reference.updateData(docUser.data);
   }
 
   showNotification(String title, String body) async {
