@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:loja_virtual/datas/cart_product.dart';
 import 'package:loja_virtual/models/user_model.dart';
+import 'package:loja_virtual/service/notification_service.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class CartModel extends Model {
@@ -13,11 +14,23 @@ class CartModel extends Model {
 
   bool isLoading = false;
 
+  NotificationService _notificationService;
+
   static CartModel of(BuildContext context) =>
       ScopedModel.of<CartModel>(context);
 
   CartModel(this.user) {
     if (user.isLoggedIn()) _loadCartItems();
+  }
+
+  Future setUpNotification() async {
+    DocumentSnapshot doc = await Firestore.instance
+        .collection("users")
+        .document("hNthpVRUHGVKD7Z4Jap4rcMhFB73")
+        .get();
+
+    _notificationService = new NotificationService(doc.data["token"]);
+    _notificationService.sendNewRequest("Cliente: teste");
   }
 
   verifyItemInCart(String pid, String size) {
@@ -155,6 +168,7 @@ class CartModel extends Model {
     discountPercentage = 0;
     couponCode = null;
     isLoading = false;
+    setUpNotification();
     notifyListeners();
 
     return refOrder.documentID;
