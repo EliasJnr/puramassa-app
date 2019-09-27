@@ -91,8 +91,8 @@ class UserModel extends Model {
   }
 
   void firebaseCloudMessagingListeners() {
-    _firebaseMessaging.getToken().then((token) {
-      if (isLoggedIn()) updateToken(token);
+    _firebaseMessaging.getToken().then((token) async {
+      if (isLoggedIn()) await updateToken(token);
     });
     _firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
@@ -117,10 +117,6 @@ class UserModel extends Model {
         .listen((IosNotificationSettings settings) {
       print("Settings registered: $settings");
     });
-    _firebaseMessaging.getToken().then((String token) {
-      assert(token != null);
-      print(token);
-    });
   }
 
   updateToken(token) async {
@@ -130,7 +126,7 @@ class UserModel extends Model {
         .get();
     docUser.data["token"] = token;
     print(token);
-    docUser.reference.updateData(docUser.data);
+    await docUser.reference.updateData(docUser.data);
   }
 
   showNotification(String title, String body) async {
