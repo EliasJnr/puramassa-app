@@ -246,7 +246,7 @@ class CartScreen extends StatelessWidget {
                   fontWeight: labelIsColumnName(name)
                       ? FontWeight.bold
                       : FontWeight.normal)),
-          padding: EdgeInsets.all(6.0),
+          padding: EdgeInsets.all(5.5),
         );
       }).toList(),
     );

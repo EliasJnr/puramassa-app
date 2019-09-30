@@ -16,10 +16,10 @@ class UserModel extends Model {
   UserModel() {
     _firebaseMessaging = FirebaseMessaging();
     flutterLocalNotificationsPlugin = new FlutterLocalNotificationsPlugin();
-    var android = new AndroidInitializationSettings('@mipmap/ic_launcher');
-    var iOS = new IOSInitializationSettings();
-    var initSetttings = new InitializationSettings(android, iOS);
-    flutterLocalNotificationsPlugin.initialize(initSetttings,
+    flutterLocalNotificationsPlugin.initialize(
+        new InitializationSettings(
+            new AndroidInitializationSettings('@mipmap/ic_launcher'),
+            new IOSInitializationSettings()),
         onSelectNotification: onSelectNotification);
   }
 

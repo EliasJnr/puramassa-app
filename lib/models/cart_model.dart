@@ -30,7 +30,7 @@ class CartModel extends Model {
         .get();
 
     _notificationService = new NotificationService(doc.data["token"]);
-    _notificationService.sendNewRequest(bodyNotification);
+    _notificationService.sendNewNotification(bodyNotification, "Novo Pedido");
   }
 
   verifyItemInCart(String pid, String size) {
