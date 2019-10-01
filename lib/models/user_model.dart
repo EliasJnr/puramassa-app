@@ -23,7 +23,9 @@ class UserModel extends Model {
         onSelectNotification: onSelectNotification);
   }
 
-  Future onSelectNotification(String payload) {}
+  Future onSelectNotification(String payload) {
+    print("teste $payload");
+  }
 
   static UserModel of(BuildContext context) =>
       ScopedModel.of<UserModel>(context);
@@ -129,12 +131,13 @@ class UserModel extends Model {
   }
 
   showNotification(String title, String body) async {
-    var android = new AndroidNotificationDetails(
-        'channel id', 'channel NAME', 'CHANNEL DESCRIPTION',
-        priority: Priority.Max, importance: Importance.Max);
-    var iOS = new IOSNotificationDetails();
-    var platform = new NotificationDetails(android, iOS);
-    await flutterLocalNotificationsPlugin.show(0, title, body, platform);
+      var android = new AndroidNotificationDetails(
+          'channel id', 'channel NAME', 'CHANNEL DESCRIPTION',
+          priority: Priority.Max, importance: Importance.Max);
+      var iOS = new IOSNotificationDetails();
+      var platform = new NotificationDetails(android, iOS);
+      await flutterLocalNotificationsPlugin.show(0, title, body, platform);
+
   }
 
   void signOut() async {

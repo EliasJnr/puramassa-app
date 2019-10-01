@@ -45,7 +45,6 @@ class HomeScreen extends StatelessWidget {
             centerTitle: true,
           ),
           body: OrdersTab(),
-          floatingActionButton: CartButton(),
           drawer: CustomDrawer(_pageController),
         ),
       ],
