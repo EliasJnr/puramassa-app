@@ -23,9 +23,7 @@ class UserModel extends Model {
         onSelectNotification: onSelectNotification);
   }
 
-  Future onSelectNotification(String payload) {
-    print("teste $payload");
-  }
+  Future<Null> onSelectNotification(String payload) {}
 
   static UserModel of(BuildContext context) =>
       ScopedModel.of<UserModel>(context);
@@ -104,13 +102,13 @@ class UserModel extends Model {
       },
       onLaunch: (Map<String, dynamic> message) async {
         print("onLaunch: $message");
-        showNotification(
-            message['notification']['title'], message['notification']['body']);
+//        showNotification(
+//            message['notification']['title'], message['notification']['body']);
       },
       onResume: (Map<String, dynamic> message) async {
         print("onResume: $message");
-        showNotification(
-            message['notification']['title'], message['notification']['body']);
+//        showNotification(
+//            message['notification']['title'], message['notification']['body']);
       },
     );
     _firebaseMessaging.requestNotificationPermissions(
@@ -131,13 +129,12 @@ class UserModel extends Model {
   }
 
   showNotification(String title, String body) async {
-      var android = new AndroidNotificationDetails(
-          'channel id', 'channel NAME', 'CHANNEL DESCRIPTION',
-          priority: Priority.Max, importance: Importance.Max);
-      var iOS = new IOSNotificationDetails();
-      var platform = new NotificationDetails(android, iOS);
-      await flutterLocalNotificationsPlugin.show(0, title, body, platform);
-
+    var android = new AndroidNotificationDetails(
+        'channel id', 'channel NAME', 'CHANNEL DESCRIPTION',
+        priority: Priority.Max, importance: Importance.Max);
+    var iOS = new IOSNotificationDetails();
+    var platform = new NotificationDetails(android, iOS);
+    await flutterLocalNotificationsPlugin.show(0, title, body, platform);
   }
 
   void signOut() async {
