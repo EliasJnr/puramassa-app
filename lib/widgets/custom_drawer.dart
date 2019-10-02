@@ -16,7 +16,7 @@ class CustomDrawer extends StatefulWidget {
 }
 
 class _CustomDrawerState extends State<CustomDrawer> {
-  String _projectVersion = '1.0';
+  String _projectVersion = '0';
 
   @override
   void initState() {
@@ -29,7 +29,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
     try {
       projectVersion = await GetVersion.projectCode;
     } on PlatformException {
-      projectVersion = '1.0';
+      projectVersion = '0';
     }
 
     setState(() {
@@ -42,7 +42,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
     Widget _buildDrawerBack() => Container(
           decoration: BoxDecoration(
               gradient: LinearGradient(
-                  colors: [Colors.white, Colors.grey],
+                  colors: [Colors.white, Colors.grey[300]],
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter)),
         );
@@ -57,7 +57,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
               Container(
                 margin: EdgeInsets.only(bottom: 8.0),
                 padding: EdgeInsets.fromLTRB(0.0, 16.0, 16.0, 8.0),
-                height: 170.0,
+                height: 150.0,
                 child: Stack(
                   children: <Widget>[
                     Positioned(
@@ -69,12 +69,12 @@ class _CustomDrawerState extends State<CustomDrawer> {
                           Text(
                             "PuraMassa",
                             style: TextStyle(
-                                fontSize: 34.0, fontWeight: FontWeight.bold),
+                                fontSize: 32.0, fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            "version: 1.0.$_projectVersion",
+                            "versão: 1.0.$_projectVersion",
                             style: TextStyle(
-                                fontSize: 12.0, fontWeight: FontWeight.normal),
+                                fontSize: 12.0, fontWeight: FontWeight.normal, color: Colors.grey[700]),
                           )
                         ],
                       ),
