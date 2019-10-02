@@ -17,7 +17,7 @@ class HomeScreen extends StatelessWidget {
       physics: NeverScrollableScrollPhysics(),
       children: <Widget>[
         Scaffold(
-          body: MainTab(),
+          body: HomeTab(),
           drawer: CustomDrawer(_pageController),
           floatingActionButton: CartButton(),
         ),
