@@ -24,3 +24,9 @@ android/app/src/main/java/io/flutter/plugins/
 android/local.properties
 
 ios/Flutter/
+
+.dart_tool/flutter_build/d9796d2603f61fbdd86b9b2ee1ce9dfc/
+
+.dart_tool/
+
+.flutter-plugins-dependencies
