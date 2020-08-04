@@ -8,9 +8,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:239196718320:android:0ae556fc8a043282",
+        "mobilesdk_app_id": "1:239196718320:android:faa3255ec7d95f98",
         "android_client_info": {
-          "package_name": "br.com.eliasjr.loja_virtual"
+          "package_name": "br.com.eliasjr.gerente_loja"
         }
       },
       "oauth_client": [
@@ -21,7 +21,44 @@
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBtaXKZHJ9TOcQzIWPwizmDBr00DpEDQdo"
+          "current_key": "AIzaSyDU2uqYTVpsMpe7TYb3_ntQHdpVhjsEfbI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "239196718320-nq1jhueja29g0g5ltgdb4o2cb6p1ds4l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:239196718320:android:0ae556fc8a043282",
+        "android_client_info": {
+          "package_name": "br.com.eliasjr.loja_virtual"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "239196718320-s1appj9irkdkcu4s85et5428ivr2gnjt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.eliasjr.loja_virtual",
+            "certificate_hash": "1c216774330930d2e585cf8a17a8223ee7fc78ce"
+          }
+        },
+        {
+          "client_id": "239196718320-nq1jhueja29g0g5ltgdb4o2cb6p1ds4l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDU2uqYTVpsMpe7TYb3_ntQHdpVhjsEfbI"
         }
       ],
       "services": {
