@@ -158,7 +158,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               "email": _emailController.text,
                               "address": _addressController.text,
                               "phone": _phoneController.text,
-                              "phone2": _phone2Controller.text
+                              "phone2": _phone2Controller.text,
+                              "token" : ""
                             };
 
                             model.signUp(

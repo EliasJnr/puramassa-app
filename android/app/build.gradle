@@ -13,12 +13,12 @@ if (flutterRoot == null) {
 
 def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
 if (flutterVersionCode == null) {
-    flutterVersionCode = '4'
+    flutterVersionCode = '8'
 }
 
 def flutterVersionName = localProperties.getProperty('flutter.versionName')
 if (flutterVersionName == null) {
-    flutterVersionName = '4.0'
+    flutterVersionName = '1.8'
 }
 
 apply plugin: 'com.android.application'
@@ -65,7 +65,6 @@ android {
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig keystorePropertiesFile.exists() ?  signingConfigs.release:signingConfigs.debug
 
-            minifyEnabled true
             useProguard true
 
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'

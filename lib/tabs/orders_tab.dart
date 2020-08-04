@@ -21,6 +21,10 @@ class OrdersTab extends StatelessWidget {
             return Center(
               child: CircularProgressIndicator(),
             );
+          } else if(snapshot.data.documents.isEmpty) {
+            return Center(
+              child: Text('Nenhum pedido cadastrado !', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25.0),),
+            );
           } else {
             return ListView(
               children: snapshot.data.documents

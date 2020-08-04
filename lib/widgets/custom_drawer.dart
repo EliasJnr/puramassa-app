@@ -1,20 +1,48 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:get_version/get_version.dart';
 import 'package:loja_virtual/models/user_model.dart';
 import 'package:loja_virtual/screens/login_screen.dart';
 import 'package:loja_virtual/tiles/drawer_tile.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-class CustomDrawer extends StatelessWidget {
+class CustomDrawer extends StatefulWidget {
   final PageController pageController;
 
   CustomDrawer(this.pageController);
+
+  @override
+  _CustomDrawerState createState() => _CustomDrawerState();
+}
+
+class _CustomDrawerState extends State<CustomDrawer> {
+  String _projectVersion = '0';
+
+  @override
+  void initState() {
+    super.initState();
+    initPlatformState();
+  }
+
+  initPlatformState() async {
+    String projectVersion = '';
+    try {
+      projectVersion = await GetVersion.projectCode;
+    } on PlatformException {
+      projectVersion = '0';
+    }
+
+    setState(() {
+      _projectVersion = projectVersion;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     Widget _buildDrawerBack() => Container(
           decoration: BoxDecoration(
               gradient: LinearGradient(
-                  colors: [Colors.grey, Colors.white],
+                  colors: [Colors.white, Colors.grey[300]],
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter)),
         );
@@ -29,16 +57,26 @@ class CustomDrawer extends StatelessWidget {
               Container(
                 margin: EdgeInsets.only(bottom: 8.0),
                 padding: EdgeInsets.fromLTRB(0.0, 16.0, 16.0, 8.0),
-                height: 170.0,
+                height: 150.0,
                 child: Stack(
                   children: <Widget>[
                     Positioned(
                       top: 8.0,
                       left: 0.0,
-                      child: Text(
-                        "PuraMassa",
-                        style: TextStyle(
-                            fontSize: 34.0, fontWeight: FontWeight.bold),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            "PuraMassa",
+                            style: TextStyle(
+                                fontSize: 32.0, fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            "versão: 1.0.$_projectVersion",
+                            style: TextStyle(
+                                fontSize: 12.0, fontWeight: FontWeight.normal, color: Colors.grey[700]),
+                          )
+                        ],
                       ),
                     ),
                     Positioned(
@@ -84,11 +122,12 @@ class CustomDrawer extends StatelessWidget {
                 ),
               ),
               Divider(),
-              DrawerTile(Icons.home, "Início", pageController, 0),
-              DrawerTile(Icons.list, "Produtos", pageController, 1),
-              DrawerTile(Icons.location_on, "Contato", pageController, 2),
+              DrawerTile(Icons.home, "Início", widget.pageController, 0),
+              DrawerTile(Icons.list, "Produtos", widget.pageController, 1),
               DrawerTile(
-                  Icons.playlist_add_check, "Meus Pedidos", pageController, 3),
+                  Icons.location_on, "Contato", widget.pageController, 2),
+              DrawerTile(Icons.playlist_add_check, "Meus Pedidos",
+                  widget.pageController, 3),
             ],
           )
         ],

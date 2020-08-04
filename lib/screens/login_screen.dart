@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:loja_virtual/models/user_model.dart';
-import 'package:loja_virtual/screens/signup_screen.dart';
 import 'package:scoped_model/scoped_model.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -30,8 +30,9 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             textColor: Colors.white,
             onPressed: () {
-              Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => SignUpScreen()));
+//              Navigator.of(context).push(
+//                  MaterialPageRoute(builder: (context) => SignUpScreen()));
+              whatsAppOpen();
             },
           )
         ],
@@ -127,6 +128,20 @@ class _LoginScreenState extends State<LoginScreen> {
   void _onFail() {
     _scaffoldKey.currentState.showSnackBar(SnackBar(
       content: Text("Falha ao Entrar !"),
+      backgroundColor: Colors.redAccent,
+      duration: Duration(seconds: 2),
+    ));
+  }
+
+  void whatsAppOpen() async {
+    var whatsappUrl =
+        "whatsapp://send?phone=5592982611237&text=Olá%20quero%20agendar%20uma%20visita%20!!";
+    await canLaunch(whatsappUrl) ? launch(whatsappUrl) : wppNotInstalled();
+  }
+
+  void wppNotInstalled() {
+    _scaffoldKey.currentState.showSnackBar(SnackBar(
+      content: Text("whatsApp não instalado !"),
       backgroundColor: Colors.redAccent,
       duration: Duration(seconds: 2),
     ));

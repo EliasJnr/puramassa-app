@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:loja_virtual/datas/cart_product.dart';
 import 'package:loja_virtual/models/user_model.dart';
+import 'package:loja_virtual/service/notification_service.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class CartModel extends Model {
@@ -13,6 +14,8 @@ class CartModel extends Model {
 
   bool isLoading = false;
 
+  NotificationService _notificationService;
+
   static CartModel of(BuildContext context) =>
       ScopedModel.of<CartModel>(context);
 
@@ -20,8 +23,28 @@ class CartModel extends Model {
     if (user.isLoggedIn()) _loadCartItems();
   }
 
+  Future setUpNotification(String bodyNotification) async {
+    DocumentSnapshot doc = await Firestore.instance
+        .collection("users")
+        .document("hNthpVRUHGVKD7Z4Jap4rcMhFB73")
+        .get();
+
+    _notificationService = new NotificationService(doc.data["token"]);
+    _notificationService.sendNewNotification(bodyNotification, "Novo Pedido");
+  }
+
   verifyItemInCart(String pid, String size) {
-    return products.where((item) => item.pid == pid && size == item.size).toList();
+    return products
+        .where((item) => item.pid == pid && size == item.size)
+        .toList();
+  }
+
+  verifyOrderOpen() async {
+    return await Firestore.instance
+        .collection("users")
+        .document(user.firebaseUser.uid)
+        .collection("orders")
+        .getDocuments();
   }
 
   void addCartItem(CartProduct cartProduct) {
@@ -100,7 +123,7 @@ class CartModel extends Model {
   }
 
   double getShipPrice() {
-    return 9.99;
+    return 10.0;
   }
 
   Future<String> finishOrder() async {
@@ -110,17 +133,17 @@ class CartModel extends Model {
     notifyListeners();
 
     double productsPrice = getProductsPrice();
-    double shipPirce = getShipPrice();
+    double shipPrice = getShipPrice();
     double discount = getDiscount();
 
     DocumentReference refOrder =
         await Firestore.instance.collection("orders").add({
       "clientId": user.firebaseUser.uid,
       "products": products.map((cartProduct) => cartProduct.toMap()).toList(),
-      "shipPrice": shipPirce,
+      "shipPrice": shipPrice,
       "productsPrice": productsPrice,
       "discount": discount,
-      "totalPrice": productsPrice - discount + shipPirce,
+      "totalPrice": productsPrice - discount + shipPrice,
       "status": 0
     });
 
@@ -145,6 +168,12 @@ class CartModel extends Model {
     discountPercentage = 0;
     couponCode = null;
     isLoading = false;
+
+    String bodyNotification = "Total: " +
+        (productsPrice.toDouble() - discount.toDouble() + shipPrice.toDouble())
+            .toStringAsFixed(2);
+    bodyNotification += "\nCliente: " + user.firebaseUser.email;
+    setUpNotification(bodyNotification);
     notifyListeners();
 
     return refOrder.documentID;
